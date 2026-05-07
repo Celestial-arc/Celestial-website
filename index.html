@@ -155,39 +155,95 @@
 </div>
 
 <script>
-// Autonomous FAQ knowledge base
+// Expanded FAQ – no creator mode, no internal systems
 const faq = [
-    { q: "is the app free", a: "Yes! The basic features are free forever with daily limits. Pro and Business plans unlock more." },
-    { q: "how much does pro cost", a: "Pro starts at $1.49/week (<b>≈5,600 UGX/week</b>). Monthly and yearly plans are available." },
-    { q: "does it work offline", a: "Yes! Download optional AI packs and Celestial AI works without internet – no data charges." },
-    { q: "what languages", a: "English, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, French, Spanish, Arabic, Japanese, Korean, Chinese, and more." },
-    { q: "is my data safe", a: "Your conversations are encrypted on‑device. We never sell your data. Cloud backup is optional and encrypted with your password." },
-    { q: "can it download movies", a: "No. Celestial AI does not download or pirate media. It controls apps like Spotify and Netflix via voice, and plays your own local files." },
-    { q: "what is creator mode", a: "Creator Mode is a special, hidden admin mode for the app developer. It is not accessible to users." },
-    { q: "how do i cancel subscription", a: "You can cancel anytime from Google Play → Subscriptions. Your Pro access continues until the end of the paid period." },
-    { q: "how do i delete my data", a: "Go to Settings → Privacy & Data → Delete Account. All your data will be permanently removed within 30 days." },
-    { q: "does it drain battery", a: "Celestial AI is optimised for low-end phones. The wake‑word feature uses minimal power. Offline AI runs efficiently." },
-    { q: "what is the vault", a: "The Vault is a secure storage for passwords and notes, locked behind your fingerprint. Even we can't see its contents." }
+    // ACCOUNT
+    { keywords: "sign up create account register login log in email password", answer: "To create an account, open the app and tap <b>Sign Up</b>. You can use an email and password, or sign up with Google or Apple. After creating an account, you can log in anytime." },
+    { keywords: "forgot password reset password", answer: "If you forgot your password, tap <b>Forgot Password</b> on the login screen. We'll send a reset link to your email." },
+    { keywords: "delete account remove account", answer: "Go to <b>Settings → Privacy & Data → Delete Account</b>. All your data will be permanently removed within 30 days." },
+    { keywords: "change email update email", answer: "You can update your email in <b>Settings → Account</b>. For security, you may need to re‑enter your password." },
+    { keywords: "multiple devices phone tablet login same account", answer: "Yes, you can log in on multiple devices. Your conversations and settings will sync automatically if cloud backup is enabled." },
+    { keywords: "logout sign out log out", answer: "Go to <b>Settings → Account → Log Out</b>. You can log back in at any time." },
+
+    // SUBSCRIPTION & BILLING
+    { keywords: "free cost price trial", answer: "Yes! The basic features are free forever with daily limits. Pro and Business plans unlock more advanced features." },
+    { keywords: "pro cost price how much pricing subscription", answer: "Pro starts at <b>$1.49/week (≈5,600 UGX/week)</b>. Monthly and yearly plans are also available at $4.99/month and $49.99/year." },
+    { keywords: "business price cost per seat", answer: "The Business plan costs <b>$9.99 per seat per month (≈37,500 UGX)</b>. It includes team workspaces, shared knowledge base, meeting transcriptions, and workflow automations." },
+    { keywords: "cancel subscription stop unsubscribe", answer: "You can cancel anytime from <b>Google Play → Subscriptions</b> (or Apple App Store). Your Pro access continues until the end of the current period." },
+    { keywords: "refund money back", answer: "All sales are final unless required by law. If you have a billing issue, please contact us at <b>celestialarc85@gmail.com</b>." },
+    { keywords: "payment method card mobile money pay", answer: "Payments are processed by Google Play (or Apple). You can use any payment method supported by your app store, including mobile money, credit/debit cards, and more." },
+    { keywords: "upgrade downgrade plan", answer: "You can upgrade to Pro or Business at any time in <b>Settings → Subscription</b>. If you downgrade, your current plan remains active until the end of the billing period." },
+
+    // FEATURES
+    { keywords: "chat talk conversation write message", answer: "You can chat with Celestial AI by typing or speaking. The AI can answer questions, write content, translate, and help you with tasks." },
+    { keywords: "voice commands wake word hey celestial speak listen", answer: "Say <b>\"Hey Celestial\"</b> followed by your command. You can turn this on in <b>Settings → Voice → Wake Word</b>. It works even when the app is in the background." },
+    { keywords: "offline without internet no connection data", answer: "Yes! Download optional AI packs and Celestial AI works without internet – no data charges. Perfect for remote areas or travel." },
+    { keywords: "languages supported speak language", answer: "We support English, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, French, Spanish, Arabic, Japanese, Korean, Chinese, and many more." },
+    { keywords: "translation translate language convert", answer: "The app can translate text and voice in real time. Just type or speak a phrase and ask the AI to translate it. There is also a conversation mode for two‑way translation." },
+    { keywords: "health steps sleep water wellness fitness", answer: "Celestial AI can connect to your phone's health tracker to monitor steps, sleep, heart rate, and more. Use voice commands like <b>\"Log water 500ml\"</b> to stay on track." },
+    { keywords: "first aid emergency accident injury", answer: "The app includes a built‑in first‑aid guide with step‑by‑step instructions for common emergencies. It works completely offline." },
+    { keywords: "vault safe secure password storage", answer: "The Vault is a secure storage for passwords, notes, and sensitive files, locked behind your fingerprint. Even Celestial Tech cannot see its contents." },
+    { keywords: "custom commands macros shortcuts", answer: "You can create custom voice or text commands that perform multiple actions at once. Go to <b>Commands</b> in the app to set them up." },
+    { keywords: "music player equalizer songs playlist", answer: "The app has a full music player for your local audio files, with an equalizer, lyrics, playlists, and playback controls. You can also launch streaming apps like Spotify." },
+    { keywords: "movie video player playback", answer: "For your local video files, the app includes a video player with subtitles, resume watching, playlist support, and quality controls." },
+    { keywords: "media launch spotify netflix youtube", answer: "From the <b>Music Launcher</b> or <b>Movie Launcher</b>, you can quickly open any installed streaming service. The app does not download copyrighted content." },
+    { keywords: "browser web search internet", answer: "Celestial AI has a built‑in browser with multiple search engines, reader mode, and the ability to read pages aloud. Bookmark your favorite sites and sync with Chrome." },
+    { keywords: "search find locate conversations files settings", answer: "The universal search feature lets you look for anything inside the app – conversations, files, settings, and more. Just tap the search icon on the home screen." },
+    { keywords: "backup restore chat data", answer: "Enable <b>Cloud Backup</b> in Settings to save your conversations, commands, and health data securely. Your backup is encrypted with a password only you know." },
+    { keywords: "widget home screen quick access", answer: "Add the Celestial AI widget to your home screen for one‑tap microphone access. It shows your last command and lets you start a voice chat instantly." },
+    { keywords: "wear os watch smartwatch", answer: "Celestial AI comes with a Wear OS companion app. Use your watch for voice commands, fitness glances, and quick replies." },
+    { keywords: "accessibility talkback screen reader color blind", answer: "We take accessibility seriously. The app supports TalkBack, switch control, voice‑only navigation, color‑blind modes, and dynamic text sizing. Find these in <b>Settings → Accessibility</b>." },
+    { keywords: "night mode dark theme appearance", answer: "By default, Celestial AI uses a neon dark theme that is comfortable for your eyes. You can switch to other themes in <b>Settings → Appearance</b>." },
+    { keywords: "privacy data policy permissions", answer: "Your conversations and health data are stored on your device and encrypted. We never sell your data. Read our <b>Privacy Policy</b> in Settings or on this website." },
+    { keywords: "battery drain power consumption", answer: "Celestial AI is optimized for low‑end phones. The wake‑word feature uses minimal battery. Offline AI runs efficiently, and you can adjust performance in Settings." },
+
+    // MISCELLANEOUS
+    { keywords: "update app latest version", answer: "The app updates automatically through the Play Store. You can check for updates manually in the Play Store under <b>My apps & games</b>." },
+    { keywords: "contact support help email", answer: "You can email us at <b>celestialarc85@gmail.com</b> or use the contact form on this website. We typically respond within 24 hours." },
+    { keywords: "what is celestial ai about", answer: "Celestial AI is a smart, voice‑first assistant that works online and offline, speaks your language, and helps you with conversations, tasks, health, and more. It's free to start with affordable Pro plans." },
+    { keywords: "how start begin getting started", answer: "Welcome! After installing the app, create an account, explore the home screen, tap the microphone to talk, or type a message. Check out <b>Settings → Help</b> for tips." },
+    { keywords: "problem issue bug crash", answer: "If the app crashes or you see an error, try restarting the app. If the issue persists, please email us with the details: <b>celestialarc85@gmail.com</b>. You can also share debug logs from <b>Settings → Support → Share Debug Logs</b>." }
 ];
 
-// Simple string similarity (Jaccard index on character bigrams)
-function similarity(a, b) {
-    a = a.toLowerCase(); b = b.toLowerCase();
-    const bigramsA = new Set(); for(let i=0;i<a.length-1;i++) bigramsA.add(a.substring(i,i+2));
-    const bigramsB = new Set(); for(let i=0;i<b.length-1;i++) bigramsB.add(b.substring(i,i+2));
-    const intersection = new Set([...bigramsA].filter(x => bigramsB.has(x)));
-    const union = new Set([...bigramsA, ...bigramsB]);
-    return intersection.size / union.size;
+// Stop words
+const stopWords = new Set([
+    "i", "you", "he", "she", "it", "we", "they",
+    "a", "an", "the", "is", "are", "was", "were", "be", "been",
+    "does", "do", "did", "can", "will", "would", "shall", "should",
+    "to", "of", "in", "for", "on", "with", "at", "by", "from",
+    "what", "when", "where", "which", "who", "why", "how",
+    "about", "and", "or", "but", "not", "no", "yes",
+    "this", "that", "it", "its", "me", "my", "mine", "your", "yours",
+    "please", "tell", "say", "hi", "hello", "hey", "ok", "okay"
+]);
+
+function cleanAndSplit(text) {
+    return text.toLowerCase()
+        .replace(/[^\w\s]/g, '')
+        .split(/\s+/)
+        .filter(word => word.length > 1 && !stopWords.has(word));
 }
 
 function findAnswer(query) {
-    let best = { index: -1, score: 0 };
-    faq.forEach((item, idx) => {
-        const score = similarity(query, item.q);
-        if (score > best.score) { best.index = idx; best.score = score; }
-    });
-    if (best.score > 0.2) return faq[best.index].a;
-    return null;
+    const queryWords = cleanAndSplit(query);
+    if (queryWords.length === 0) return null;
+
+    let best = { answer: null, score: 0 };
+
+    for (const entry of faq) {
+        const keywordSet = new Set(entry.keywords.split(' '));
+        let matchCount = 0;
+        for (const word of queryWords) {
+            if (keywordSet.has(word)) matchCount++;
+        }
+        const score = matchCount / queryWords.length;
+        if (score > best.score) {
+            best.score = score;
+            best.answer = entry.answer;
+        }
+    }
+
+    return best.score >= 0.2 ? best.answer : null;
 }
 
 function addMessage(text, isUser) {
@@ -209,7 +265,11 @@ function sendMessage() {
     if (answer) {
         addMessage(answer, false);
     } else {
-        addMessage("I'm sorry, I don't know the answer to that. Would you like to send a message to the team? <br><br><a href='mailto:celestialarc85@gmail.com' style='color:#00C8FF;'>Tap here to email us</a>", false);
+        addMessage(
+            "I'm sorry, I don't have an answer for that yet. Would you like to send a message to the team? " +
+            "<br><br><a href='mailto:celestialarc85@gmail.com' style='color:#00C8FF;'>Tap here to email us</a>",
+            false
+        );
     }
 }
 
