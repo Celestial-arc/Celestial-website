@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Celestial AI – Your Smarter Assistant</title>
-    <!-- PWA meta -->
     <link rel="manifest" href="data:application/json,{}">
     <meta name="theme-color" content="#040810">
     <meta name="mobile-web-app-capable" content="yes">
@@ -14,40 +13,42 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #040810; color: #E0E0FF; font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; }
-        .container { max-width: 900px; margin: auto; padding: 2rem 1.5rem; }
-        .logo { display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        body { background: #040810; color: #E0E0FF; font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; scroll-behavior: smooth; }
+        .container { max-width: 1000px; margin: auto; padding: 2rem 1.5rem; }
+
+        /* Navigation */
+        nav { background: #0C121F; border-bottom: 1px solid #1E2A3A; position: sticky; top: 0; z-index: 500; padding: 0.8rem 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+        nav a { color: #B0B0FF; text-decoration: none; font-weight: 500; }
+        nav a:hover { color: #00C8FF; }
+
+        .logo { display: flex; justify-content: center; align-items: center; margin: 2rem 0 1rem; }
         .tagline { text-align: center; color: #B0B0FF; margin-bottom: 2rem; }
-        h2 { color: #00C8FF; margin: 2rem 0 1rem; border-bottom: 1px solid #1E2A3A; padding-bottom: 0.5rem; }
-        .feature-grid, .comparison { display: flex; flex-wrap: wrap; gap: 1rem; }
-        .feature-card, .plan { flex: 1 1 250px; background: #0C121F; border-radius: 16px; padding: 1.2rem; border: 1px solid #1E2A3A; }
-        .feature-card h3 { color: #00C8FF; margin-bottom: 0.5rem; }
-        .plan h3 { color: #7B2FFF; }
+        h1, h2 { color: #00C8FF; }
+        h2 { margin: 2.5rem 0 1rem; border-bottom: 1px solid #1E2A3A; padding-bottom: 0.5rem; }
+        h3 { color: #7B2FFF; margin: 1.5rem 0 0.5rem; }
+
+        .feature-grid, .tool-grid, .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+        .card { background: #0C121F; border-radius: 16px; padding: 1.2rem; border: 1px solid #1E2A3A; }
+        .card h3, .card h4 { color: #00C8FF; margin-bottom: 0.5rem; }
         .plan strong { color: #00C8FF; font-size: 1.4rem; }
-        ul { padding-left: 1.2rem; margin: 1rem 0; }
-        li { margin-bottom: 0.5rem; }
-        .faq-item { margin-bottom: 1.5rem; }
-        .faq-item summary { font-weight: 700; color: #00C8FF; cursor: pointer; margin-bottom: 0.5rem; }
+
+        ul, ol { padding-left: 1.5rem; margin: 1rem 0; }
+        li { margin-bottom: 0.6rem; }
+
+        .faq details { margin-bottom: 1rem; background: #0C121F; border-radius: 12px; padding: 1rem; border: 1px solid #1E2A3A; }
+        .faq summary { font-weight: 700; color: #00C8FF; cursor: pointer; }
+        .faq p { margin-top: 0.8rem; }
+
         a { color: #00C8FF; text-decoration: none; }
+        .btn { background: #00C8FF; color: #040810; padding: 0.8rem 1.5rem; border-radius: 30px; display: inline-block; font-weight: 600; text-align: center; }
+        .btn:hover { background: #00B0E0; }
+
         footer { text-align: center; font-size: 0.9rem; color: #6A7A9A; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid #1E2A3A; }
 
-        /* Chatbot widget */
-        #chatbot-toggle {
-            position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
-            background: #00C8FF; border-radius: 28px; border: none; cursor: pointer;
-            box-shadow: 0 0 18px #00C8FF80; display: flex; align-items: center; justify-content: center;
-            font-size: 28px; z-index: 1000;
-        }
-        #chatbot-window {
-            position: fixed; bottom: 90px; right: 20px; width: 340px; max-height: 500px;
-            background: #0C121F; border: 1px solid #1E2A3A; border-radius: 16px;
-            display: none; flex-direction: column; z-index: 999; overflow: hidden;
-            box-shadow: 0 0 24px #00000080;
-        }
-        #chatbot-header {
-            background: #0C121F; padding: 12px 16px; border-bottom: 1px solid #1E2A3A;
-            font-weight: 700; color: #00C8FF; display: flex; justify-content: space-between;
-        }
+        /* Chatbot */
+        #chatbot-toggle { position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; background: #00C8FF; border-radius: 28px; border: none; cursor: pointer; box-shadow: 0 0 18px #00C8FF80; display: flex; align-items: center; justify-content: center; font-size: 28px; z-index: 1000; }
+        #chatbot-window { position: fixed; bottom: 90px; right: 20px; width: 360px; max-height: 550px; background: #0C121F; border: 1px solid #1E2A3A; border-radius: 16px; display: none; flex-direction: column; z-index: 999; overflow: hidden; box-shadow: 0 0 24px #00000080; }
+        #chatbot-header { background: #0C121F; padding: 12px 16px; border-bottom: 1px solid #1E2A3A; font-weight: 700; color: #00C8FF; display: flex; justify-content: space-between; }
         #chatbot-messages { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
         .chat-msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; line-height: 1.4; }
         .chat-msg.user { align-self: flex-end; background: #00C8FF20; border: 1px solid #00C8FF50; color: #E0E0FF; }
@@ -58,19 +59,25 @@
 
         @media(max-width: 600px) {
             #chatbot-window { width: 90%; right: 5%; }
+            nav { flex-direction: column; align-items: center; }
         }
-
-        /* Formspree form */
-        .contact-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-        .contact-form input, .contact-form textarea {
-            background: #0C121F; border: 1px solid #1E2A3A; padding: 0.8rem; border-radius: 12px; color: white;
-        }
-        .contact-form button { background: #00C8FF; border: none; padding: 0.8rem; border-radius: 12px; font-weight: 700; color: #040810; cursor: pointer; }
     </style>
 </head>
 <body>
+
+<!-- Navigation -->
+<nav>
+    <a href="#features">Features</a>
+    <a href="#tools">Tools</a>
+    <a href="#howtouse">How to Use</a>
+    <a href="#plans">Plans</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+</nav>
+
 <div class="container">
-    <!-- Logo (inline SVG of the "A" arch) -->
+
+    <!-- Logo -->
     <div class="logo">
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="60" cy="60" r="58" fill="#040810" stroke="#00C8FF" stroke-width="2"/>
@@ -83,70 +90,208 @@
             <circle cx="75" cy="20" r="1.5" fill="#7B2FFF" opacity="0.5"/>
         </svg>
     </div>
-    <p class="tagline">Your smarter, private, always‑available assistant.</p>
+    <p class="tagline">Your smarter, private, always‑available assistant. Works online and offline, speaks your language, helps you do more.</p>
 
-    <!-- Features -->
-    <h2>✨ What Celestial AI Does</h2>
+    <!-- Features Overview -->
+    <h2 id="features">✨ Key Features</h2>
     <div class="feature-grid">
-        <div class="feature-card"><h3>💬 Smart Chat</h3><p>Text or voice – Celestial AI answers questions, writes, translates, and helps you think.</p></div>
-        <div class="feature-card"><h3>🎙️ Voice Commands</h3><p>“Hey Celestial, set a reminder”, “Call Mum”, “Turn on Wi‑Fi” – totally hands‑free.</p></div>
-        <div class="feature-card"><h3>📴 Works Offline</h3><p>On‑device AI runs even without internet. Perfect for remote areas or travel.</p></div>
-        <div class="feature-card"><h3>🗣️ Speaks Your Language</h3><p>Hausa, Yoruba, Swahili, French, Arabic, and 15+ more – with natural local accents.</p></div>
-        <div class="feature-card"><h3>🫀 Health & Wellness</h3><p>Track steps, sleep, water intake, and get guided first aid – all offline and private.</p></div>
-        <div class="feature-card"><h3>🔐 Secret Vault</h3><p>Store passwords and notes behind your fingerprint – even Celestial Tech cannot see inside.</p></div>
+        <div class="card"><h3>💬 Smart Chat</h3><p>Text or voice. Ask questions, write, translate, brainstorm. Responses clearly labelled as AI‑generated.</p></div>
+        <div class="card"><h3>🎙️ Voice Commands</h3><p>“Hey Celestial, set a timer.” Over 50 command types. Custom macros. Total hands‑free control.</p></div>
+        <div class="card"><h3>📴 Offline AI</h3><p>On‑device models run without internet. Chat, search Wikipedia, get first aid – zero data charges.</p></div>
+        <div class="card"><h3>🗣️ 20+ Languages</h3><p>Speak Hausa, Yoruba, Igbo, Swahili, French, Arabic, Chinese… with natural local accents.</p></div>
+        <div class="card"><h3>🫀 Health & First Aid</h3><p>Track steps, sleep, water. Offline first‑aid guide with step‑by‑step visuals.</p></div>
+        <div class="card"><h3>🔐 Secret Vault</h3><p>Encrypted storage for passwords and notes. Locked behind your fingerprint. We can't see inside.</p></div>
     </div>
 
-    <!-- Free vs Pro -->
-    <h2>💎 Plans</h2>
-    <div class="comparison">
-        <div class="plan"><h3>Free</h3><p><strong>0 UGX</strong> forever</p>
+    <!-- Tools & Capabilities Deep Dive -->
+    <h2 id="tools">🧰 All Tools & Capabilities</h2>
+
+    <h3>💬 AI Chat & Conversation</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Text Chat</h4><p>Type naturally. The AI remembers context and supports long conversations. Edit or delete messages anytime.</p></div>
+        <div class="card"><h4>Voice Chat</h4><p>Tap the mic and speak. The AI responds aloud. Works offline with downloaded voice packs.</p></div>
+        <div class="card"><h4>Chain‑of‑Thought</h4><p>For complex questions, the AI shows its reasoning step by step. Collapsible panel keeps it tidy.</p></div>
+        <div class="card"><h4>Jump to Topic</h4><p>Say “Take me to where we talked about cars” and the chat scrolls to that exact spot.</p></div>
+    </div>
+
+    <h3>🎙️ Voice & Wake Word</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Wake Word</h4><p>Say “Hey Celestial” even when the phone is locked. On‑device detection, zero cloud listening.</p></div>
+        <div class="card"><h4>Voice Commands</h4><p>Control your phone: “Turn on Wi‑Fi”, “Volume up”, “Call Mum”, “Play music”.</p></div>
+        <div class="card"><h4>Custom Commands / Macros</h4><p>Create multi‑step shortcuts. “Gym Mode” = DND + playlist + timer. Record taps or type actions.</p></div>
+        <div class="card"><h4>Vernacular Voices</h4><p>Download accents for different regions. The AI sounds like someone from your community.</p></div>
+    </div>
+
+    <h3>📚 Knowledge & Learning</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Offline Wikipedia</h4><p>Download language packs. Search the full encyclopedia without internet. Text‑only or with images.</p></div>
+        <div class="card"><h4>Research Feed</h4><p>Add topics. The AI scans the web and builds a living summary. Stay briefed automatically.</p></div>
+        <div class="card"><h4>Flashcards & Learning</h4><p>Highlight any AI response, turn it into a flashcard. Spaced repetition helps you remember.</p></div>
+        <div class="card"><h4>Fact‑Check Live</h4><p>While browsing, tap “Fact‑Check” to cross‑reference claims with verified sources.</p></div>
+    </div>
+
+    <h3>🎵 Media & Entertainment</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Music Launcher</h4><p>Card‑based grid. One‑tap to open Spotify, YouTube Music, Apple Music, and more. See what's installed.</p></div>
+        <div class="card"><h4>Movie Launcher</h4><p>Same for Netflix, Prime Video, Disney+, Showmax. Quick play, last watched indicator.</p></div>
+        <div class="card"><h4>Local Music Player</h4><p>Full player with album art, lyrics, playlists, equalizer, bass boost, and queue management.</p></div>
+        <div class="card"><h4>Local Video Player</h4><p>Play your files. Subtitles, resume watching, aspect ratio control, watch history.</p></div>
+    </div>
+
+    <h3>💪 Health & Wellness</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Health Dashboard</h4><p>Steps, calories, sleep, heart rate, water, weight. All encrypted locally.</p></div>
+        <div class="card"><h4>Voice Logging</h4><p>“Log water 500ml”, “Log weight 70kg”. Quick hands‑free tracking.</p></div>
+        <div class="card"><h4>First Aid Guide</h4><p>CPR, burns, choking, fractures, seizures, stroke, allergies. Offline, step‑by‑step with illustrations.</p></div>
+        <div class="card"><h4>Wellness Tools</h4><p>Mood check‑in, guided breathing, meditation, journaling prompts.</p></div>
+    </div>
+
+    <h3>🔧 Productivity & Automation</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Recurring Tasks</h4><p>“Remind me every Monday at 8 AM to check inventory.” Linked to custom commands.</p></div>
+        <div class="card"><h4>Visual Workflow Builder</h4><p>Drag‑and‑drop automations. “If Bluetooth connects to car → start driving mode.”</p></div>
+        <div class="card"><h4>Email / SMS Automation</h4><p>Auto‑reply rules. “When Mum texts → reply I'm driving.” Opt‑in, secure.</p></div>
+        <div class="card"><h4>Calendar Intelligence</h4><p>Analyzes your schedule. Suggests meeting times, prepares briefs, flags conflicts.</p></div>
+    </div>
+
+    <h3>🌐 Browser & Web</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>In‑App Browser</h4><p>Tabs, bookmarks, history. Multiple search engines (Google, DuckDuckGo, Bing).</p></div>
+        <div class="card"><h4>Read Aloud & Summarize</h4><p>Tap a button to hear any page read aloud, or get a one‑paragraph summary.</p></div>
+        <div class="card"><h4>Offline Reader</h4><p>Save pages for later. Read articles, PDFs, and websites without internet.</p></div>
+        <div class="card"><h4>Web Content Extraction</h4><p>Long‑press on a product page, the AI extracts price, title, image – structured data.</p></div>
+    </div>
+
+    <h3>🔐 Privacy & Security</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Secret Vault</h4><p>Encrypted notes and passwords. Fingerprint‑protected. Even we can't see inside.</p></div>
+        <div class="card"><h4>Cloud Backup</h4><p>Encrypted backup with your own password. We don't have the key. Restore on any device.</p></div>
+        <div class="card"><h4>Data Purge</h4><p>Auto‑delete old conversations after a set period. Full control in Settings.</p></div>
+        <div class="card"><h4>Anti‑Scam Detection</h4><p>Scans SMS and emails for scam patterns. Warns you before you click a dangerous link.</p></div>
+    </div>
+
+    <h3>🚗 On the Go</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Android Auto / CarPlay</h4><p>Hands‑free AI on your car screen. Voice‑only while driving. Safety lock.</p></div>
+        <div class="card"><h4>Offline Navigation</h4><p>Download maps. Turn‑by‑turn directions, offline place search, voice‑guided.</p></div>
+        <div class="card"><h4>Wear OS</h4><p>Companion app for your watch. Voice commands, fitness glance, quick replies.</p></div>
+        <div class="card"><h4>TV Mode</h4><p>Android TV interface. Large cards, voice‑first, control your TV with “Hey Celestial”.</p></div>
+    </div>
+
+    <h3>👩‍💻 For Developers & Creators</h3>
+    <div class="tool-grid">
+        <div class="card"><h4>Code Assistant</h4><p>Write and review code snippets. Multi‑language. On‑device for privacy.</p></div>
+        <div class="card"><h4>API Playground</h4><p>Send test HTTP requests. AI generates boilerplate code from responses.</p></div>
+        <div class="card"><h4>Idea Validator</h4><p>Describe an app idea. AI researches the market and gives a feasibility report.</p></div>
+        <div class="card"><h4>UI Prototyper</h4><p>Describe a screen. The AI generates a working Flutter widget you can preview.</p></div>
+    </div>
+
+    <!-- How to Use Step-by-Step -->
+    <h2 id="howtouse">📖 How to Use Celestial AI</h2>
+    <p>Here are step‑by‑step guides for the most common tasks.</p>
+
+    <h3>Start a Conversation</h3>
+    <ol>
+        <li>Open the app and tap the glowing orb or the Chat icon.</li>
+        <li>Type your message and press Enter, or tap the microphone and speak.</li>
+        <li>Wait for the orb to pulse and show a thinking animation; the response appears shortly.</li>
+        <li>Tap the 👍 or 👎 below the response to give quick feedback.</li>
+        <li>Long‑press any message for options: Edit, Delete, Copy, Highlight.</li>
+    </ol>
+
+    <h3>Use Voice Commands</h3>
+    <ol>
+        <li>Go to <b>Settings → Voice → Wake Word</b> and turn on “Hey Celestial”.</li>
+        <li>From any screen, say <b>“Hey Celestial”</b> followed by a command, e.g., “What’s the weather today?”</li>
+        <li>The Voice Assistant screen opens and the orb starts listening. Speak clearly.</li>
+        <li>To create a custom command, go to <b>Commands → +</b>. Enter a trigger phrase and the actions.</li>
+    </ol>
+
+    <h3>Use Offline Mode</h3>
+    <ol>
+        <li>Go to <b>Settings → Offline Knowledge</b>.</li>
+        <li>Tap the language you want and choose “Download” (text‑only or full).</li>
+        <li>Once downloaded, toggle <b>Force Offline</b> in <b>Settings → AI Preferences</b>.</li>
+        <li>Now you can chat, search Wikipedia, and use the first‑aid guide without internet.</li>
+    </ol>
+
+    <h3>Download a Map for Offline Navigation</h3>
+    <ol>
+        <li>Go to <b>Maps → Download Region</b>.</li>
+        <li>Pick a city or country and tap <b>Download</b> (Wi‑Fi recommended).</li>
+        <li>Once downloaded, say “Navigate to [place]” or tap the map and enter a destination.</li>
+    </ol>
+
+    <h3>Create a Secure Backup</h3>
+    <ol>
+        <li>Go to <b>Settings → Cloud Backup</b>.</li>
+        <li>Toggle <b>Auto Backup</b> on. Choose frequency (daily recommended).</li>
+        <li>Choose a strong backup password. <b>Do not lose it</b> – we can't recover it.</li>
+        <li>Tap <b>Back Up Now</b> to create your first encrypted backup.</li>
+    </ol>
+
+    <h3>Set Up a Recurring Reminder</h3>
+    <ol>
+        <li>Say <b>“Remind me every Monday at 8 AM to check inventory”</b>.</li>
+        <li>The app creates the reminder. You can view and edit it in the <b>Tasks</b> screen.</li>
+        <li>You can also link a reminder to a custom command.</li>
+    </ol>
+
+    <!-- Plans -->
+    <h2 id="plans">💎 Plans & Pricing</h2>
+    <div class="plan-grid">
+        <div class="card"><h3>Free</h3><p><strong>0 UGX</strong> forever</p>
             <ul><li>Daily usage limits</li><li>All basic AI features</li><li>On‑device offline mode</li><li>Voice commands</li><li>First aid & health logging</li></ul>
         </div>
-        <div class="plan"><h3>Pro</h3><p>From <strong>≈ 5,600 UGX/week</strong></p>
+        <div class="card"><h3>Pro</h3><p>From <strong>≈ 5,600 UGX/week</strong></p>
             <ul><li>Unlimited usage</li><li>Advanced AI models</li><li>Extended offline memory</li><li>Priority support</li><li>Pro creative tools</li></ul>
         </div>
-        <div class="plan"><h3>Business</h3><p><strong>≈ 37,500 UGX/seat/month</strong>
+        <div class="card"><h3>Business</h3><p><strong>≈ 37,500 UGX/seat/month</strong>
             <ul><li>Team workspace</li><li>Shared knowledge base</li><li>Meeting transcriptions</li><li>Workflow automations</li><li>Spending controls</li></ul>
         </div>
     </div>
 
     <!-- FAQ -->
-    <h2>❓ Frequently Asked Questions</h2>
-    <details class="faq-item"><summary>Is Celestial AI really free?</summary><p>Yes. The basic features are free forever with reasonable daily limits. You only pay if you want Pro perks.</p></details>
-    <details class="faq-item"><summary>Does the app listen to me all the time?</summary><p>No. The optional “Hey Celestial” wake‑word feature listens only for that phrase, on‑device. Nothing is uploaded until you speak a command.</p></details>
-    <details class="faq-item"><summary>Can it download music or movies?</summary><p>No. Celestial AI does not download or pirate media. It can control your existing apps (Spotify, Netflix) and play local files you own.</p></details>
-    <details class="faq-item"><summary>What languages are supported?</summary><p>English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, Arabic, Japanese, Korean, Chinese, and more.</p></details>
-    <details class="faq-item"><summary>Is my data safe?</summary><p>Yes. Your conversations and health data are encrypted and stored on‑device. We never sell your data. Read our full <a href="#">Privacy Policy</a>.</p></details>
+    <h2 id="faq">❓ Frequently Asked Questions</h2>
+    <div class="faq">
+        <details><summary>Is Celestial AI really free?</summary><p>Yes. The basic features are free forever with fair daily limits. You only pay if you want Pro or Business features.</p></details>
+        <details><summary>Does the app listen to me all the time?</summary><p>No. The optional “Hey Celestial” wake‑word listens only for that phrase, on‑device. Nothing is uploaded until you speak a command.</p></details>
+        <details><summary>Can it download music or movies?</summary><p>No. Celestial AI does not pirate media. It controls your existing apps and plays your own local files.</p></details>
+        <details><summary>What languages are supported?</summary><p>English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Kinyarwanda, Arabic, Japanese, Korean, Chinese, and many more.</p></details>
+        <details><summary>Is my data safe?</summary><p>Conversations and health data are encrypted on‑device. We never sell your data.</p></details>
+        <details><summary>How do I cancel my subscription?</summary><p>Cancel anytime from Google Play → Subscriptions. Your Pro access continues until the end of the billing period.</p></details>
+        <details><summary>Does the app work without internet?</summary><p>Yes! Download offline packs (AI model, maps, Wikipedia) and use it completely offline.</p></details>
+        <details><summary>How do I delete my data?</summary><p>Go to Settings → Privacy & Data → Delete Account. Everything is removed within 30 days.</p></details>
+        <details><summary>Can I use the app on multiple devices?</summary><p>Yes. Log in on your phone, tablet, and watch. Cloud backup keeps everything in sync.</p></details>
+    </div>
 
     <!-- Download -->
     <h2>📲 Get the App</h2>
-    <p> Not yet available  on the Google Play Store.</p>
-    <p><a href="https://play.google.com/store/apps/details?id=com.celestial.ai.v6pro" style="background:#00C8FF; color:#040810; padding:0.8rem 1.5rem; border-radius:30px; display:inline-block; font-weight:600;">Download on Google Play</a></p>
+    <p>Available now on the Google Play Store.</p>
+    <p><a href="https://play.google.com/store/apps/details?id=com.celestial.ai.v6pro" class="btn">Download on Google Play</a></p>
 
-    <!-- Contact form -->
-    <h2>📧 Contact Us</h2>
-    <form class="contact-form" action="https://formspree.io/f/xjglegdo" method="POST">
-        <input type="text" name="name" placeholder="Your name" required>
-        <input type="email" name="email" placeholder="Your email" required>
-        <textarea name="message" rows="4" placeholder="How can we help?"></textarea>
-        <button type="submit">Send Message</button>
+    <!-- Contact -->
+    <h2 id="contact">📧 Contact Us</h2>
+    <form class="card" action="https://formspree.io/f/xjglegdo" method="POST" style="display:flex; flex-direction:column; gap:1rem; margin-top:1rem;">
+        <input type="text" name="name" placeholder="Your name" required style="background:#040810; border:1px solid #1E2A3A; padding:0.8rem; border-radius:12px; color:white;">
+        <input type="email" name="email" placeholder="Your email" required style="background:#040810; border:1px solid #1E2A3A; padding:0.8rem; border-radius:12px; color:white;">
+        <textarea name="message" rows="4" placeholder="How can we help?" style="background:#040810; border:1px solid #1E2A3A; padding:0.8rem; border-radius:12px; color:white;"></textarea>
+        <button type="submit" class="btn">Send Message</button>
     </form>
-    <p style="margin-top:0.5rem;">Or email directly: <a href="mailto:celestialaiservices@gmail.com">celestialaiservices@gmail.com</a></p>
+    <p style="margin-top:0.5rem;">Or email: <a href="mailto:celestialarc85@gmail.com">celestialarc85@gmail.com</a></p>
 </div>
 
 <footer>© Celestial Tech – Built in Uganda, for the world. | <a href="#">Privacy</a> | <a href="#">Terms</a></footer>
 
-<!-- Chatbot toggle -->
+<!-- Chatbot -->
 <button id="chatbot-toggle" onclick="toggleChat()">💬</button>
-
-<!-- Chatbot window -->
 <div id="chatbot-window">
     <div id="chatbot-header">
         <span>Celestial AI Assistant</span>
         <button onclick="toggleChat()" style="background:none;border:none;color:#00C8FF;font-weight:bold;cursor:pointer;">✕</button>
     </div>
     <div id="chatbot-messages">
-        <div class="chat-msg bot">Hi! I'm the Celestial AI FAQ bot. Ask me anything about the app!</div>
+        <div class="chat-msg bot">Hi! I can explain any feature, tool, plan, or setting in Celestial AI. Ask me anything!</div>
     </div>
     <div id="chatbot-input-area">
         <input type="text" id="chatbot-input" placeholder="Type your question..." onkeypress="if(event.key==='Enter') sendMessage()">
@@ -155,54 +300,194 @@
 </div>
 
 <script>
-// Expanded FAQ – no creator mode, no internal systems
+// Comprehensive knowledge base – each answer is a detailed breakdown
 const faq = [
-    // ACCOUNT
-    { keywords: "sign up create account register login log in email password", answer: "To create an account, open the app and tap <b>Sign Up</b>. You can use an email and password, or sign up with Google or Apple. After creating an account, you can log in anytime." },
-    { keywords: "forgot password reset password", answer: "If you forgot your password, tap <b>Forgot Password</b> on the login screen. We'll send a reset link to your email." },
-    { keywords: "delete account remove account", answer: "Go to <b>Settings → Privacy & Data → Delete Account</b>. All your data will be permanently removed within 30 days." },
-    { keywords: "change email update email", answer: "You can update your email in <b>Settings → Account</b>. For security, you may need to re‑enter your password." },
-    { keywords: "multiple devices phone tablet login same account", answer: "Yes, you can log in on multiple devices. Your conversations and settings will sync automatically if cloud backup is enabled." },
-    { keywords: "logout sign out log out", answer: "Go to <b>Settings → Account → Log Out</b>. You can log back in at any time." },
+    // Account
+    { keywords: "sign up create account register login log in email password", answer:
+    "<b>Creating an account</b><br><br>" +
+    "Open the app and tap <b>Sign Up</b>. You can register using your email address and a password, or quickly sign up with your Google or Apple account.<br><br>" +
+    "Once registered, you’ll receive a welcome email. Use those same credentials to log in anytime. If you ever forget your password, tap <b>Forgot Password</b> on the login screen and we’ll send a reset link.<br><br>" +
+    "Your account is protected by the password and optional biometric lock (fingerprint/face). We never share your credentials with third parties." },
 
-    // SUBSCRIPTION & BILLING
-    { keywords: "free cost price trial", answer: "Yes! The basic features are free forever with daily limits. Pro and Business plans unlock more advanced features." },
-    { keywords: "pro cost price how much pricing subscription", answer: "Pro starts at <b>$1.49/week (≈5,600 UGX/week)</b>. Monthly and yearly plans are also available at $4.99/month and $49.99/year." },
-    { keywords: "business price cost per seat", answer: "The Business plan costs <b>$9.99 per seat per month (≈37,500 UGX)</b>. It includes team workspaces, shared knowledge base, meeting transcriptions, and workflow automations." },
-    { keywords: "cancel subscription stop unsubscribe", answer: "You can cancel anytime from <b>Google Play → Subscriptions</b> (or Apple App Store). Your Pro access continues until the end of the current period." },
-    { keywords: "refund money back", answer: "All sales are final unless required by law. If you have a billing issue, please contact us at <b>celestialarc85@gmail.com</b>." },
-    { keywords: "payment method card mobile money pay", answer: "Payments are processed by Google Play (or Apple). You can use any payment method supported by your app store, including mobile money, credit/debit cards, and more." },
-    { keywords: "upgrade downgrade plan", answer: "You can upgrade to Pro or Business at any time in <b>Settings → Subscription</b>. If you downgrade, your current plan remains active until the end of the billing period." },
+    { keywords: "forgot password reset password", answer:
+    "Tap <b>Forgot Password</b> on the login screen. Enter the email address you used to register. We’ll send you an email with a link to create a new password. The link expires in 1 hour for security." },
 
-    // FEATURES
-    { keywords: "chat talk conversation write message", answer: "You can chat with Celestial AI by typing or speaking. The AI can answer questions, write content, translate, and help you with tasks." },
-    { keywords: "voice commands wake word hey celestial speak listen", answer: "Say <b>\"Hey Celestial\"</b> followed by your command. You can turn this on in <b>Settings → Voice → Wake Word</b>. It works even when the app is in the background." },
-    { keywords: "offline without internet no connection data", answer: "Yes! Download optional AI packs and Celestial AI works without internet – no data charges. Perfect for remote areas or travel." },
-    { keywords: "languages supported speak language", answer: "We support English, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, French, Spanish, Arabic, Japanese, Korean, Chinese, and many more." },
-    { keywords: "translation translate language convert", answer: "The app can translate text and voice in real time. Just type or speak a phrase and ask the AI to translate it. There is also a conversation mode for two‑way translation." },
-    { keywords: "health steps sleep water wellness fitness", answer: "Celestial AI can connect to your phone's health tracker to monitor steps, sleep, heart rate, and more. Use voice commands like <b>\"Log water 500ml\"</b> to stay on track." },
-    { keywords: "first aid emergency accident injury", answer: "The app includes a built‑in first‑aid guide with step‑by‑step instructions for common emergencies. It works completely offline." },
-    { keywords: "vault safe secure password storage", answer: "The Vault is a secure storage for passwords, notes, and sensitive files, locked behind your fingerprint. Even Celestial Tech cannot see its contents." },
-    { keywords: "custom commands macros shortcuts", answer: "You can create custom voice or text commands that perform multiple actions at once. Go to <b>Commands</b> in the app to set them up." },
-    { keywords: "music player equalizer songs playlist", answer: "The app has a full music player for your local audio files, with an equalizer, lyrics, playlists, and playback controls. You can also launch streaming apps like Spotify." },
-    { keywords: "movie video player playback", answer: "For your local video files, the app includes a video player with subtitles, resume watching, playlist support, and quality controls." },
-    { keywords: "media launch spotify netflix youtube", answer: "From the <b>Music Launcher</b> or <b>Movie Launcher</b>, you can quickly open any installed streaming service. The app does not download copyrighted content." },
-    { keywords: "browser web search internet", answer: "Celestial AI has a built‑in browser with multiple search engines, reader mode, and the ability to read pages aloud. Bookmark your favorite sites and sync with Chrome." },
-    { keywords: "search find locate conversations files settings", answer: "The universal search feature lets you look for anything inside the app – conversations, files, settings, and more. Just tap the search icon on the home screen." },
-    { keywords: "backup restore chat data", answer: "Enable <b>Cloud Backup</b> in Settings to save your conversations, commands, and health data securely. Your backup is encrypted with a password only you know." },
-    { keywords: "widget home screen quick access", answer: "Add the Celestial AI widget to your home screen for one‑tap microphone access. It shows your last command and lets you start a voice chat instantly." },
-    { keywords: "wear os watch smartwatch", answer: "Celestial AI comes with a Wear OS companion app. Use your watch for voice commands, fitness glances, and quick replies." },
-    { keywords: "accessibility talkback screen reader color blind", answer: "We take accessibility seriously. The app supports TalkBack, switch control, voice‑only navigation, color‑blind modes, and dynamic text sizing. Find these in <b>Settings → Accessibility</b>." },
-    { keywords: "night mode dark theme appearance", answer: "By default, Celestial AI uses a neon dark theme that is comfortable for your eyes. You can switch to other themes in <b>Settings → Appearance</b>." },
-    { keywords: "privacy data policy permissions", answer: "Your conversations and health data are stored on your device and encrypted. We never sell your data. Read our <b>Privacy Policy</b> in Settings or on this website." },
-    { keywords: "battery drain power consumption", answer: "Celestial AI is optimized for low‑end phones. The wake‑word feature uses minimal battery. Offline AI runs efficiently, and you can adjust performance in Settings." },
+    { keywords: "delete account remove account erase", answer:
+    "Go to <b>Settings → Privacy & Data → Delete Account</b>. Confirm your password or biometric. All your personal data will be permanently removed from our servers within 30 days. Your cloud backups will also be deleted. If you have a Pro subscription, cancel it first to stop further billing.<br><br>" +
+    "After deletion, you cannot recover the account. You can create a new one at any time." },
 
-    // MISCELLANEOUS
-    { keywords: "update app latest version", answer: "The app updates automatically through the Play Store. You can check for updates manually in the Play Store under <b>My apps & games</b>." },
-    { keywords: "contact support help email", answer: "You can email us at <b>celestialarc85@gmail.com</b> or use the contact form on this website. We typically respond within 24 hours." },
-    { keywords: "what is celestial ai about", answer: "Celestial AI is a smart, voice‑first assistant that works online and offline, speaks your language, and helps you with conversations, tasks, health, and more. It's free to start with affordable Pro plans." },
-    { keywords: "how start begin getting started", answer: "Welcome! After installing the app, create an account, explore the home screen, tap the microphone to talk, or type a message. Check out <b>Settings → Help</b> for tips." },
-    { keywords: "problem issue bug crash", answer: "If the app crashes or you see an error, try restarting the app. If the issue persists, please email us with the details: <b>celestialarc85@gmail.com</b>. You can also share debug logs from <b>Settings → Support → Share Debug Logs</b>." }
+    { keywords: "multiple devices phone tablet login same account", answer:
+    "Yes, you can be signed in on your phone, tablet, and Wear OS watch simultaneously. When you enable <b>Cloud Backup</b>, your conversations, custom commands, and settings sync between devices. Changes made on one device appear on the others within seconds." },
+
+    // Subscription & Billing
+    { keywords: "pro cost price how much pricing subscription", answer:
+    "<b>Pro Plans</b><br><br>" +
+    "Weekly Pro: <b>$1.49/week (~5,600 UGX/week)</b><br>" +
+    "Monthly Pro: <b>$4.99/month (~18,700 UGX/month)</b><br>" +
+    "Annual Pro: <b>$49.99/year (~187,500 UGX/year) – save 16%</b><br><br>" +
+    "All prices are set in US dollars; your app store automatically converts them to your local currency. The amount you see at checkout is the exact amount you’ll be charged.<br><br>" +
+    "Pro gives you unlimited daily usage, access to more powerful AI models, extended offline memory, premium automation steps, and priority support." },
+
+    { keywords: "business price cost per seat", answer:
+    "<b>Business Plan</b><br><br>" +
+    "<b>$9.99 per seat per month (~37,500 UGX/seat/month)</b><br><br>" +
+    "Each member of your team needs their own seat. The Business plan unlocks:<br>" +
+    "- Shared team workspace<br>" +
+    "- Knowledge base with semantic search<br>" +
+    "- Meeting transcription and summaries<br>" +
+    "- AI‑powered support ticket handling<br>" +
+    "- Workflow automations<br>" +
+    "- Spending controls per category<br><br>" +
+    "You can add or remove seats anytime. Billing is per seat, per month, and you only pay for active seats." },
+
+    { keywords: "cancel subscription stop unsubscribe", answer:
+    "You can cancel anytime directly through the app store:<br>" +
+    "<b>Android:</b> Open the Google Play Store → Payments & Subscriptions → Subscriptions → Celestial AI → Cancel Subscription.<br>" +
+    "<b>Apple:</b> Settings → your name → Subscriptions → Celestial AI → Cancel.<br><br>" +
+    "Your Pro access continues until the end of the current billing period. We do not offer partial‑month refunds." },
+
+    { keywords: "refund money back", answer:
+    "All sales are final unless required by local consumer law. If you were charged by mistake or a technical issue prevented you from using Pro, email us at <b>celestialarc85@gmail.com</b> within 14 days and we’ll review your case." },
+
+    // Features – detailed breakdowns
+    { keywords: "chat talk conversation write message", answer:
+    "<b>Chatting with Celestial AI</b><br><br>" +
+    "Open the app and you’ll see the Home HUD. Tap the chat icon or the glowing orb to start a conversation. You can type messages or tap the microphone to speak.<br><br>" +
+    "The AI responds like a helpful friend – it can answer questions, explain complex topics, write emails, translate text, and brainstorm ideas. Every AI response is clearly labelled as AI‑generated.<br><br>" +
+    "You can scroll back through your conversation history, jump to a specific topic by saying 'Take me to where we talked about cars', and long‑press on any message to edit, delete, copy, or highlight it." },
+
+    { keywords: "voice commands wake word hey celestial speak listen", answer:
+    "<b>Voice Commands & Wake Word</b><br><br>" +
+    "Enable the wake‑word feature in <b>Settings → Voice → Wake Word</b>. Choose 'Hey Celestial' or just 'Celestial'. Once enabled, the app listens on‑device for that phrase – no audio leaves your phone.<br><br>" +
+    "When you say the wake word, the Voice Assistant screen opens and you can give commands hands‑free:<br>" +
+    "- 'Set a timer for 10 minutes'<br>" +
+    "- 'Call Mum'<br>" +
+    "- 'Turn on Bluetooth'<br>" +
+    "- 'Play music'<br>" +
+    "- 'Log water 500ml'<br><br>" +
+    "The app recognises over 50 types of commands. You can also create your own custom voice commands in the Commands section." },
+
+    { keywords: "offline without internet no connection data", answer:
+    "<b>Offline Mode</b><br><br>" +
+    "Celestial AI works fully offline once you download the optional AI packs. These packs contain a compact language model and knowledge bases (like Wikipedia and first aid).<br><br>" +
+    "To enable offline mode, go to <b>Settings → Offline Knowledge</b> and download the packs you need. After that, you can chat, ask questions, search Wikipedia, get first‑aid guidance, and run most voice commands without any internet connection.<br><br>" +
+    "Offline mode is particularly useful in areas with poor connectivity or when travelling. The AI automatically switches between online and offline depending on your connection." },
+
+    { keywords: "languages supported speak language", answer:
+    "<b>Supported Languages</b><br><br>" +
+    "Celestial AI speaks and understands over 20 languages including:<br>" +
+    "English, French, Spanish, Portuguese, Arabic, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, Pidgin English, Japanese, Korean, Mandarin Chinese, Hindi, Bengali, Russian, Italian, Turkish, Vietnamese, and Thai.<br><br>" +
+    "You can switch the app’s interface language in Settings. For voice, the app automatically detects the language you are speaking and uses the appropriate speech recognition. Vernacular voice packs (local accents) can be downloaded separately to make the AI sound like a native speaker." },
+
+    { keywords: "health steps sleep water wellness fitness", answer:
+    "<b>Health & Wellness Tracking</b><br><br>" +
+    "Connect Celestial AI to your phone’s Health Connect service (Android) to automatically track steps, distance, calories, active minutes, sleep, and heart rate. All data stays encrypted on your device.<br><br>" +
+    "Use voice commands to log things quickly: 'Log water 500ml', 'Log weight 70kg'. The AI Health Coach provides personalised insights based on your trends.<br><br>" +
+    "You can also do mood check‑ins, guided breathing exercises, and meditation sessions. The app never shares your health data with anyone – not even us." },
+
+    { keywords: "first aid emergency accident injury", answer:
+    "<b>First Aid Guide</b><br><br>" +
+    "The app includes a searchable offline first‑aid library covering CPR, choking, bleeding, burns, fractures, seizures, stroke, allergic reactions, and more. Each procedure has step‑by‑step text instructions and visual illustrations.<br><br>" +
+    "For Pro users, the AI‑powered Emergency Assistant lets you describe a situation by voice ('Someone is choking!') and get immediate, spoken guidance, even without internet." },
+
+    { keywords: "vault safe secure password storage", answer:
+    "<b>Secret Vault</b><br><br>" +
+    "The Vault is a locked, encrypted storage for passwords, notes, and sensitive files. It’s protected by your fingerprint or face – only you can unlock it. Even Celestial Tech cannot access what you store in the Vault.<br><br>" +
+    "You can organise items into categories, search within the Vault, and share specific items with trusted team members if you are on the Business plan. Everything inside is encrypted with a key derived from your biometric." },
+
+    { keywords: "custom commands macros shortcuts", answer:
+    "<b>Custom Commands / Macros</b><br><br>" +
+    "Create your own voice shortcuts that perform multiple actions at once. For example, a 'Gym Mode' command could turn on Do Not Disturb, open your workout playlist, set a 45‑minute timer, and increase brightness – all with a single phrase.<br><br>" +
+    "Go to <b>Commands</b> in the app, tap the + button, and choose your trigger phrase and actions. You can even record a sequence of taps to create a macro. Pro users can create unlimited steps and import/export command sets." },
+
+    { keywords: "music player equalizer songs playlist", answer:
+    "<b>Music Player</b><br><br>" +
+    "Celestial AI has a full music player for local audio files on your device. It supports MP3, AAC, FLAC, and other common formats. Features include:<br>" +
+    "- Play, pause, skip, seek<br>" +
+    "- Album art display<br>" +
+    "- Playlist creation and management<br>" +
+    "- Queue management (drag to reorder)<br>" +
+    "- Lyrics display if available<br>" +
+    "- Built‑in equalizer with presets (Classical, Hip Hop, Jazz, etc.) and custom bands<br>" +
+    "- Bass boost and virtualizer effects<br><br>" +
+    "The Music Launcher screen gives you one‑tap access to streaming services like Spotify, YouTube Music, and Apple Music." },
+
+    { keywords: "movie video player playback", answer:
+    "<b>Video Player</b><br><br>" +
+    "For your local video files, Celestial AI includes a full video player with:<br>" +
+    "- Play, pause, seek, fast‑forward/rewind<br>" +
+    "- Subtitle support (.srt, .vtt) with delay and size controls<br>" +
+    "- Video quality selector if multiple sources are available<br>" +
+    "- Aspect ratio controls (fit, fill, crop)<br>" +
+    "- Resume watching (remembers where you left off)<br>" +
+    "- Playlist support and watch history" },
+
+    { keywords: "media launch spotify netflix youtube", answer:
+    "<b>Media Launchers</b><br><br>" +
+    "The Music Launcher and Movie Launcher screens are card‑based grids of popular services. Each card shows whether the app is installed or not, and provides a Quick Play button. Tapping opens the service instantly.<br><br>" +
+    "The app does not download or store any copyrighted content – it only launches the official apps you already have installed." },
+
+    { keywords: "browser web search internet", answer:
+    "<b>In‑App Browser</b><br><br>" +
+    "Celestial AI includes a full web browser with tabs, bookmarks (sync with Chrome), and a reader mode that strips away ads for clean reading. You can set your default search engine (Google, DuckDuckGo, Bing, etc.) and search by voice.<br><br>" +
+    "The browser can also read pages aloud, translate them, summarise them, and save them for offline reading." },
+
+    { keywords: "search find locate conversations files settings", answer:
+    "<b>Universal Search</b><br><br>" +
+    "Tap the search icon on the home screen to search across all your data: conversations, local files, music, videos, settings, calendar events, and even within your custom commands. You can type or speak your search query." },
+
+    { keywords: "backup restore chat data", answer:
+    "<b>Cloud Backup</b><br><br>" +
+    "Enable Cloud Backup in Settings to securely back up your conversations, commands, health data, and Vault items. The backup is encrypted with a password only you know – we cannot access it. Restore is simple: log in on a new device, enter your backup password, and everything comes back." },
+
+    { keywords: "widget home screen quick access", answer:
+    "<b>Home Screen Widget</b><br><br>" +
+    "Add the Celestial AI widget to your Android home screen. It shows your last used command and has a microphone button that instantly opens the voice assistant, so you can talk without opening the app first." },
+
+    { keywords: "wear os watch smartwatch", answer:
+    "<b>Wear OS Companion</b><br><br>" +
+    "If you have a Wear OS smartwatch, you can install the Celestial AI companion app. It lets you use voice commands, see fitness summaries, and get quick replies – all from your wrist. It syncs seamlessly with your phone." },
+
+    { keywords: "accessibility talkback screen reader color blind", answer:
+    "<b>Accessibility</b><br><br>" +
+    "Celestial AI is built to be usable by everyone. In <b>Settings → Accessibility</b> you’ll find:<br>" +
+    "- Full TalkBack / screen reader support<br>" +
+    "- Voice‑only navigation mode<br>" +
+    "- Colour‑blind themes (deuteranopia, protanopia, tritanopia, monochrome)<br>" +
+    "- Dynamic text sizing (slider)<br>" +
+    "- Switch control support for motor‑impaired users<br>" +
+    "- High‑contrast mode and reduced motion options" },
+
+    { keywords: "dark theme appearance night mode", answer:
+    "<b>Appearance & Themes</b><br><br>" +
+    "The default theme is a neon dark mode designed to be easy on the eyes. In <b>Settings → Appearance</b> you can switch to other themes: Soft Light, High Contrast, Sepia, Amber/Night Shift (reduces blue light), and several vision‑protective modes for conditions like astigmatism or light sensitivity." },
+
+    { keywords: "navigation maps offline gps", answer:
+    "<b>Offline Maps & Navigation</b><br><br>" +
+    "Download map regions (cities or countries) once, and then get turn‑by‑turn voice navigation entirely offline. Search for places, get route directions, and use voice commands like 'Navigate to Kampala' – all without data charges." },
+
+    { keywords: "transcribe meeting notes summarize", answer:
+    "<b>Meeting Transcription (Business plan)</b><br><br>" +
+    "Schedule a meeting in the app, and Celestial AI will record the audio (with everyone’s consent) and automatically produce a written transcript. It also creates a summary with key points, action items, and decisions made. The transcript is searchable and stored securely in your team workspace." },
+
+    { keywords: "reminder recurring task", answer:
+    "<b>Reminders & Recurring Tasks</b><br><br>" +
+    "Set one‑time or recurring reminders by voice. Say 'Remind me every Monday at 8 AM to check inventory'. You can view and manage all your reminders in the Tasks screen. Recurring reminders can be linked to custom commands for powerful automations." },
+
+    { keywords: "problem issue bug crash", answer:
+    "If the app crashes or you see an error, try restarting it. If the problem persists, email us at <b>celestialarc85@gmail.com</b> with details, or use <b>Settings → Support → Share Debug Logs</b> to send us diagnostic information. We typically respond within 24 hours." },
+
+    { keywords: "contact support help email", answer:
+    "You can email us at <b>celestialarc85@gmail.com</b> or use the contact form on this website. We respond to most inquiries within 24 hours." },
+
+    { keywords: "what is celestial ai about", answer:
+    "Celestial AI is a smart, voice‑first assistant that works online and offline, speaks your language, and helps you with conversations, tasks, health, and more. It's free to start, with affordable Pro plans that unlock advanced features." },
+
+    { keywords: "how start begin getting started", answer:
+    "After installing the app, create an account with your email or Google/Apple. Explore the home screen – the glowing orb is your main interface. Tap the microphone to speak, or type a message. Check <b>Settings → Help</b> for a walkthrough." },
+
+    { keywords: "equalizer sound effects audio", answer:
+    "The music player includes a built‑in equalizer. Tap the equalizer icon while playing a local song. You can choose from presets (Classical, Dance, Hip Hop, Jazz, Pop, Rock) or adjust the custom 5‑band or 10‑band sliders yourself. Bass boost and virtualizer toggles are also available." }
 ];
 
 // Stop words
@@ -227,9 +512,7 @@ function cleanAndSplit(text) {
 function findAnswer(query) {
     const queryWords = cleanAndSplit(query);
     if (queryWords.length === 0) return null;
-
     let best = { answer: null, score: 0 };
-
     for (const entry of faq) {
         const keywordSet = new Set(entry.keywords.split(' '));
         let matchCount = 0;
@@ -237,12 +520,8 @@ function findAnswer(query) {
             if (keywordSet.has(word)) matchCount++;
         }
         const score = matchCount / queryWords.length;
-        if (score > best.score) {
-            best.score = score;
-            best.answer = entry.answer;
-        }
+        if (score > best.score) { best.score = score; best.answer = entry.answer; }
     }
-
     return best.score >= 0.2 ? best.answer : null;
 }
 
@@ -266,7 +545,7 @@ function sendMessage() {
         addMessage(answer, false);
     } else {
         addMessage(
-            "I'm sorry, I don't have an answer for that yet. Would you like to send a message to the team? " +
+            "I'm sorry, I don't have a detailed answer for that yet. Would you like to send a message to the team? " +
             "<br><br><a href='mailto:celestialarc85@gmail.com' style='color:#00C8FF;'>Tap here to email us</a>",
             false
         );
@@ -279,4 +558,4 @@ function toggleChat() {
 }
 </script>
 </body>
-  </html>
+</html>
