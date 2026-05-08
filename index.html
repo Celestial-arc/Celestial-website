@@ -13,64 +13,66 @@
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #040810; color: #E0E0FF; font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; scroll-behavior: smooth; }
-        .container { max-width: 1000px; margin: auto; padding: 2rem 1.5rem; }
-
-        /* Navigation */
-        nav { background: #0C121F; border-bottom: 1px solid #1E2A3A; position: sticky; top: 0; z-index: 500; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 0.8rem 1.5rem; }
-        nav a { color: #B0B0FF; text-decoration: none; font-weight: 500; }
-        nav a:hover { color: #00C8FF; }
-
-        /* Hamburger */
-        .menu-toggle { display: none; background: none; border: none; color: #00C8FF; font-size: 2rem; cursor: pointer; align-self: center; }
-        .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; }
-        @media(max-width: 600px) {
-            nav { flex-direction: column; align-items: flex-start; }
-            .menu-toggle { display: block; }
-            .nav-links { display: none; flex-direction: column; width: 100%; }
-            .nav-links.show { display: flex; }
-            nav a { padding: 0.5rem 0; }
+        :root {
+            --bg: #040810; --text: #E0E0FF; --card-bg: #0C121F; --border: #1E2A3A;
+            --primary: #00C8FF; --secondary: #7B2FFF; --hover: #00B0E0;
         }
-
+        body.light {
+            --bg: #F0F0FF; --text: #101020; --card-bg: #FFFFFF; --border: #CCCCDD;
+            --primary: #0055AA; --secondary: #7B2FFF; --hover: #0088CC;
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; scroll-behavior: smooth; }
+        .container { max-width: 1000px; margin: auto; padding: 2rem 1.5rem; }
+        nav { background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 500; display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 0.8rem 1.5rem; }
+        nav a { color: var(--text); text-decoration: none; font-weight: 500; }
+        nav a:hover { color: var(--primary); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--primary); font-size: 2rem; cursor: pointer; align-self: center; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; }
         .logo { display: flex; justify-content: center; align-items: center; margin: 2rem 0 1rem; }
-        .tagline { text-align: center; color: #B0B0FF; margin-bottom: 2rem; }
-        h1, h2 { color: #00C8FF; }
-        h2 { margin: 2.5rem 0 1rem; border-bottom: 1px solid #1E2A3A; padding-bottom: 0.5rem; }
-        h3 { color: #7B2FFF; margin: 1.5rem 0 0.5rem; }
+        .tagline { text-align: center; color: var(--text); opacity: 0.8; margin-bottom: 2rem; }
+        h1, h2 { color: var(--primary); }
+        h2 { margin: 2.5rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h3 { color: var(--secondary); margin: 1.5rem 0 0.5rem; }
         .feature-grid, .tool-grid, .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
-        .card { background: #0C121F; border-radius: 16px; padding: 1.2rem; border: 1px solid #1E2A3A; }
-        .card h3, .card h4 { color: #00C8FF; margin-bottom: 0.5rem; }
-        .plan strong { color: #00C8FF; font-size: 1.4rem; }
+        .card { background: var(--card-bg); border-radius: 16px; padding: 1.2rem; border: 1px solid var(--border); }
+        .card h3, .card h4 { color: var(--primary); margin-bottom: 0.5rem; }
+        .plan strong { color: var(--primary); font-size: 1.4rem; }
         ul, ol { padding-left: 1.5rem; margin: 1rem 0; }
         li { margin-bottom: 0.6rem; }
-        .faq details { margin-bottom: 1rem; background: #0C121F; border-radius: 12px; padding: 1rem; border: 1px solid #1E2A3A; }
-        .faq summary { font-weight: 700; color: #00C8FF; cursor: pointer; }
+        .faq details { margin-bottom: 1rem; background: var(--card-bg); border-radius: 12px; padding: 1rem; border: 1px solid var(--border); }
+        .faq summary { font-weight: 700; color: var(--primary); cursor: pointer; }
         .faq p { margin-top: 0.8rem; }
-        a { color: #00C8FF; text-decoration: none; }
-        .btn { background: #00C8FF; color: #040810; padding: 0.8rem 1.5rem; border-radius: 30px; display: inline-block; font-weight: 600; text-align: center; border: none; cursor: pointer; }
-        .btn:hover { background: #00B0E0; }
-        footer { text-align: center; font-size: 0.9rem; color: #6A7A9A; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid #1E2A3A; }
-
-        /* Chatbot */
-        #chatbot-toggle { position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; background: #00C8FF; border-radius: 28px; border: none; cursor: pointer; box-shadow: 0 0 18px #00C8FF80; display: flex; align-items: center; justify-content: center; font-size: 28px; z-index: 1000; }
-        #chatbot-window { position: fixed; bottom: 90px; right: 20px; width: 360px; max-height: 550px; background: #0C121F; border: 1px solid #1E2A3A; border-radius: 16px; display: none; flex-direction: column; z-index: 999; overflow: hidden; box-shadow: 0 0 24px #00000080; }
-        #chatbot-header { background: #0C121F; padding: 12px 16px; border-bottom: 1px solid #1E2A3A; font-weight: 700; color: #00C8FF; display: flex; justify-content: space-between; }
+        a { color: var(--primary); text-decoration: none; }
+        .btn { background: var(--primary); color: #040810; padding: 0.8rem 1.5rem; border-radius: 30px; display: inline-block; font-weight: 600; text-align: center; border: none; cursor: pointer; }
+        .btn:hover { background: var(--hover); }
+        footer { text-align: center; font-size: 0.9rem; color: var(--text); opacity: 0.6; margin-top: 3rem; padding: 1.5rem; border-top: 1px solid var(--border); }
+        #chatbot-toggle { position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px; background: var(--primary); border-radius: 28px; border: none; cursor: pointer; box-shadow: 0 0 18px rgba(0,200,255,0.5); display: flex; align-items: center; justify-content: center; font-size: 28px; z-index: 1000; color: #040810; }
+        #chatbot-window { position: fixed; bottom: 90px; right: 20px; width: 360px; max-height: 550px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; display: none; flex-direction: column; z-index: 999; overflow: hidden; box-shadow: 0 0 24px rgba(0,0,0,0.5); }
+        #chatbot-header { background: var(--card-bg); padding: 12px 16px; border-bottom: 1px solid var(--border); font-weight: 700; color: var(--primary); display: flex; justify-content: space-between; }
         #chatbot-messages { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
         .chat-msg { padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 0.9rem; line-height: 1.4; }
-        .chat-msg.user { align-self: flex-end; background: #00C8FF20; border: 1px solid #00C8FF50; color: #E0E0FF; }
-        .chat-msg.bot { align-self: flex-start; background: #1E2A3A; color: #C0C8FF; }
-        #chatbot-input-area { display: flex; padding: 8px; border-top: 1px solid #1E2A3A; }
-        #chatbot-input { flex: 1; background: #0C121F; border: 1px solid #1E2A3A; border-radius: 20px; padding: 10px 16px; color: white; outline: none; }
-        #chatbot-send { background: #00C8FF; border: none; border-radius: 20px; padding: 10px 16px; margin-left: 8px; color: #040810; font-weight: 700; cursor: pointer; }
-
-        /* Back to top */
-        #back-to-top { position: fixed; bottom: 80px; left: 20px; width: 48px; height: 48px; background: #0C121F; border: 1px solid #1E2A3A; border-radius: 24px; color: #00C8FF; font-size: 24px; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 12px #00000080; }
-
-        @media(max-width: 600px) {
-            #chatbot-window { width: 90%; right: 5%; }
-        }
+        .chat-msg.user { align-self: flex-end; background: rgba(0,200,255,0.2); border: 1px solid rgba(0,200,255,0.5); color: var(--text); }
+        .chat-msg.bot { align-self: flex-start; background: var(--border); color: var(--text); }
+        #chatbot-input-area { display: flex; padding: 8px; border-top: 1px solid var(--border); }
+        #chatbot-input { flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 10px 16px; color: var(--text); outline: none; }
+        #chatbot-send { background: var(--primary); border: none; border-radius: 20px; padding: 10px 16px; margin-left: 8px; color: #040810; font-weight: 700; cursor: pointer; }
+        #back-to-top { position: fixed; bottom: 80px; left: 20px; width: 48px; height: 48px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; color: var(--primary); font-size: 24px; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 12px rgba(0,0,0,0.5); }
+        #theme-toggle { position: fixed; bottom: 80px; right: 20px; width: 48px; height: 48px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; color: var(--primary); font-size: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; box-shadow: 0 0 12px rgba(0,0,0,0.5); }
+        @media(max-width: 600px) { nav { flex-direction: column; align-items: flex-start; } .menu-toggle { display: block; } .nav-links { display: none; flex-direction: column; width: 100%; } .nav-links.show { display: flex; } nav a { padding: 0.5rem 0; } #chatbot-window { width: 90%; right: 5%; } }
         .contact-form { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
-        .contact-form input, .contact-form textarea { background: #040810; border: 1px solid #1E2A3A; padding: 0.8rem; border-radius: 12px; color: white; }
+        .contact-form input, .contact-form textarea { background: var(--bg); border: 1px solid var(--border); padding: 0.8rem; border-radius: 12px; color: var(--text); }
+        .theme-toggle-btn { background: none; border: none; cursor: pointer; font-size: 1.5rem; color: var(--primary); }
+        .search-bar { width: 100%; padding: 0.8rem; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; color: var(--text); margin-bottom: 2rem; }
+        .chip-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.5rem 0; }
+        .chip { background: var(--border); border: none; border-radius: 20px; padding: 0.4rem 1rem; cursor: pointer; color: var(--text); font-size: 0.9rem; }
+        .chip:hover { background: var(--primary); color: #040810; }
+        .feedback { margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .feedback button { background: none; border: 1px solid var(--border); border-radius: 12px; padding: 0.3rem 0.8rem; cursor: pointer; color: var(--text); }
+        .feedback button:hover { background: var(--primary); color: #040810; }
+        .quiz { margin-top: 1rem; }
+        .quiz label { display: block; margin-bottom: 0.5rem; }
+        .quiz select, .quiz button { padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); }
+        .quiz button { background: var(--primary); color: #040810; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -81,65 +83,142 @@
         <a href="#tools">Tools</a>
         <a href="#howtouse">How to Use</a>
         <a href="#plans">Plans</a>
+        <a href="#quiz">Quiz</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle dark/light mode">🌓</button>
     </div>
 </nav>
 
 <div class="container">
     <div class="logo">
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="60" cy="60" r="58" fill="#040810" stroke="#00C8FF" stroke-width="2"/>
-            <circle cx="60" cy="60" r="48" fill="#040810" stroke="#7B2FFF" stroke-width="1.5" stroke-dasharray="6 4"/>
-            <path d="M38 80 V 40 Q 38 30 48 30 Q 58 30 60 38 Q 62 30 72 30 Q 82 30 82 40 V 80" fill="none" stroke="#00C8FF" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="60" cy="55" r="8" fill="#00C8FF" opacity="0.8"/>
-            <circle cx="30" cy="40" r="2" fill="#00C8FF" opacity="0.6"/>
-            <circle cx="90" cy="65" r="2" fill="#00C8FF" opacity="0.6"/>
-            <circle cx="45" cy="75" r="1.5" fill="#7B2FFF" opacity="0.5"/>
-            <circle cx="75" cy="20" r="1.5" fill="#7B2FFF" opacity="0.5"/>
+            <circle cx="60" cy="60" r="58" fill="var(--bg)" stroke="var(--primary)" stroke-width="2"/>
+            <circle cx="60" cy="60" r="48" fill="var(--bg)" stroke="var(--secondary)" stroke-width="1.5" stroke-dasharray="6 4"/>
+            <path d="M38 80 V 40 Q 38 30 48 30 Q 58 30 60 38 Q 62 30 72 30 Q 82 30 82 40 V 80" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="60" cy="55" r="8" fill="var(--primary)" opacity="0.8"/>
+            <circle cx="30" cy="40" r="2" fill="var(--primary)" opacity="0.6"/>
+            <circle cx="90" cy="65" r="2" fill="var(--primary)" opacity="0.6"/>
+            <circle cx="45" cy="75" r="1.5" fill="var(--secondary)" opacity="0.5"/>
+            <circle cx="75" cy="20" r="1.5" fill="var(--secondary)" opacity="0.5"/>
         </svg>
     </div>
     <p class="tagline">Your smarter, private, always‑available assistant. Works online and offline, speaks your language, helps you do more.</p>
 
+    <input type="text" class="search-bar" id="searchInput" placeholder="Search for features, tools, or how‑tos..." onkeyup="liveSearch()">
+
     <h2 id="features">✨ Key Features</h2>
     <div class="feature-grid">
-        <div class="card"><h3>💬 Smart Chat</h3><p>Text or voice. Ask questions, write, translate, brainstorm. Responses clearly labelled as AI‑generated.</p></div>
-        <div class="card"><h3>🎙️ Voice Commands</h3><p>“Hey Celestial, set a timer.” Over 50 command types. Custom macros. Total hands‑free control.</p></div>
-        <div class="card"><h3>📴 Offline AI</h3><p>On‑device models run without internet. Chat, search Wikipedia, get first aid – zero data charges.</p></div>
-        <div class="card"><h3>🗣️ 20+ Languages</h3><p>Speak Hausa, Yoruba, Igbo, Swahili, French, Arabic, Chinese… with natural local accents.</p></div>
-        <div class="card"><h3>🫀 Health & First Aid</h3><p>Track steps, sleep, water. Offline first‑aid guide with step‑by‑step visuals.</p></div>
-        <div class="card"><h3>🔐 Secret Vault</h3><p>Encrypted storage for passwords and notes. Locked behind your fingerprint. We can't see inside.</p></div>
+        <div class="card" data-keywords="chat conversation text voice"><h3>💬 Smart Chat</h3><p>Text or voice. Ask questions, write, translate, brainstorm. Responses clearly labelled as AI‑generated.</p></div>
+        <div class="card" data-keywords="voice commands wake word hey celestial hands-free"><h3>🎙️ Voice Commands</h3><p>“Hey Celestial, set a timer.” Over 50 command types. Custom macros. Total hands‑free control.</p></div>
+        <div class="card" data-keywords="offline no internet airplane mode"><h3>📴 Offline AI</h3><p>On‑device models run without internet. Chat, search Wikipedia, get first aid – zero data charges.</p></div>
+        <div class="card" data-keywords="languages hausa yoruba igbo swahili french arabic translation"><h3>🗣️ 20+ Languages</h3><p>Speak Hausa, Yoruba, Igbo, Swahili, French, Arabic, Chinese… with natural local accents.</p></div>
+        <div class="card" data-keywords="health first aid steps sleep water"><h3>🫀 Health & First Aid</h3><p>Track steps, sleep, water. Offline first‑aid guide with step‑by‑step visuals.</p></div>
+        <div class="card" data-keywords="vault password secure fingerprint"><h3>🔐 Secret Vault</h3><p>Encrypted storage for passwords and notes. Locked behind your fingerprint. We can't see inside.</p></div>
     </div>
 
     <h2 id="tools">🧰 All Tools & Capabilities</h2>
-    <h3>💬 AI Chat & Conversation</h3>
-    <div class="tool-grid"><div class="card"><h4>Text Chat</h4><p>Type naturally. The AI remembers context and supports long conversations. Edit or delete messages anytime.</p></div><div class="card"><h4>Voice Chat</h4><p>Tap the mic and speak. The AI responds aloud. Works offline with downloaded voice packs.</p></div><div class="card"><h4>Chain‑of‑Thought</h4><p>For complex questions, the AI shows its reasoning step by step. Collapsible panel keeps it tidy.</p></div><div class="card"><h4>Jump to Topic</h4><p>Say “Take me to where we talked about cars” and the chat scrolls to that exact spot.</p></div></div>
-    <h3>🎙️ Voice & Wake Word</h3>
-    <div class="tool-grid"><div class="card"><h4>Wake Word</h4><p>Say “Hey Celestial” even when the phone is locked. On‑device detection, zero cloud listening.</p></div><div class="card"><h4>Voice Commands</h4><p>Control your phone: “Turn on Wi‑Fi”, “Volume up”, “Call Mum”, “Play music”.</p></div><div class="card"><h4>Custom Commands / Macros</h4><p>Create multi‑step shortcuts. “Gym Mode” = DND + playlist + timer. Record taps or type actions.</p></div><div class="card"><h4>Vernacular Voices</h4><p>Download accents for different regions. The AI sounds like someone from your community.</p></div></div>
-    <h3>📚 Knowledge & Learning</h3>
-    <div class="tool-grid"><div class="card"><h4>Offline Wikipedia</h4><p>Download language packs. Search the full encyclopedia without internet. Text‑only or with images.</p></div><div class="card"><h4>Research Feed</h4><p>Add topics. The AI scans the web and builds a living summary. Stay briefed automatically.</p></div><div class="card"><h4>Flashcards & Learning</h4><p>Highlight any AI response, turn it into a flashcard. Spaced repetition helps you remember.</p></div><div class="card"><h4>Fact‑Check Live</h4><p>While browsing, tap “Fact‑Check” to cross‑reference claims with verified sources.</p></div></div>
-    <h3>🎵 Media & Entertainment</h3>
-    <div class="tool-grid"><div class="card"><h4>Music Launcher</h4><p>Card‑based grid. One‑tap to open Spotify, YouTube Music, Apple Music, and more. See what's installed.</p></div><div class="card"><h4>Movie Launcher</h4><p>Same for Netflix, Prime Video, Disney+, Showmax. Quick play, last watched indicator.</p></div><div class="card"><h4>Local Music Player</h4><p>Full player with album art, lyrics, playlists, equalizer, bass boost, and queue management.</p></div><div class="card"><h4>Local Video Player</h4><p>Play your files. Subtitles, resume watching, aspect ratio control, watch history.</p></div></div>
-    <h3>💪 Health & Wellness</h3>
-    <div class="tool-grid"><div class="card"><h4>Health Dashboard</h4><p>Steps, calories, sleep, heart rate, water, weight. All encrypted locally.</p></div><div class="card"><h4>Voice Logging</h4><p>“Log water 500ml”, “Log weight 70kg”. Quick hands‑free tracking.</p></div><div class="card"><h4>First Aid Guide</h4><p>CPR, burns, choking, fractures, seizures, stroke, allergies. Offline, step‑by‑step with illustrations.</p></div><div class="card"><h4>Wellness Tools</h4><p>Mood check‑in, guided breathing, meditation, journaling prompts.</p></div></div>
-    <h3>🔧 Productivity & Automation</h3>
-    <div class="tool-grid"><div class="card"><h4>Recurring Tasks</h4><p>“Remind me every Monday at 8 AM to check inventory.” Linked to custom commands.</p></div><div class="card"><h4>Visual Workflow Builder</h4><p>Drag‑and‑drop automations. “If Bluetooth connects to car → start driving mode.”</p></div><div class="card"><h4>Email / SMS Automation</h4><p>Auto‑reply rules. “When Mum texts → reply I'm driving.” Opt‑in, secure.</p></div><div class="card"><h4>Calendar Intelligence</h4><p>Analyzes your schedule. Suggests meeting times, prepares briefs, flags conflicts.</p></div></div>
-    <h3>🌐 Browser & Web</h3>
-    <div class="tool-grid"><div class="card"><h4>In‑App Browser</h4><p>Tabs, bookmarks, history. Multiple search engines (Google, DuckDuckGo, Bing).</p></div><div class="card"><h4>Read Aloud & Summarize</h4><p>Tap a button to hear any page read aloud, or get a one‑paragraph summary.</p></div><div class="card"><h4>Offline Reader</h4><p>Save pages for later. Read articles, PDFs, and websites without internet.</p></div><div class="card"><h4>Web Content Extraction</h4><p>Long‑press on a product page, the AI extracts price, title, image – structured data.</p></div></div>
-    <h3>🔐 Privacy & Security</h3>
-    <div class="tool-grid"><div class="card"><h4>Secret Vault</h4><p>Encrypted notes and passwords. Fingerprint‑protected. Even we can't see inside.</p></div><div class="card"><h4>Cloud Backup</h4><p>Encrypted backup with your own password. We don't have the key. Restore on any device.</p></div><div class="card"><h4>Data Purge</h4><p>Auto‑delete old conversations after a set period. Full control in Settings.</p></div><div class="card"><h4>Anti‑Scam Detection</h4><p>Scans SMS and emails for scam patterns. Warns you before you click a dangerous link.</p></div></div>
-    <h3>🚗 On the Go</h3>
-    <div class="tool-grid"><div class="card"><h4>Android Auto / CarPlay</h4><p>Hands‑free AI on your car screen. Voice‑only while driving. Safety lock.</p></div><div class="card"><h4>Offline Navigation</h4><p>Download maps. Turn‑by‑turn directions, offline place search, voice‑guided.</p></div><div class="card"><h4>Wear OS</h4><p>Companion app for your watch. Voice commands, fitness glance, quick replies.</p></div><div class="card"><h4>TV Mode</h4><p>Android TV interface. Large cards, voice‑first, control your TV with “Hey Celestial”.</p></div></div>
-    <h3>👩‍💻 For Developers & Creators</h3>
-    <div class="tool-grid"><div class="card"><h4>Code Assistant</h4><p>Write and review code snippets. Multi‑language. On‑device for privacy.</p></div><div class="card"><h4>API Playground</h4><p>Send test HTTP requests. AI generates boilerplate code from responses.</p></div><div class="card"><h4>Idea Validator</h4><p>Describe an app idea. AI researches the market and gives a feasibility report.</p></div><div class="card"><h4>UI Prototyper</h4><p>Describe a screen. The AI generates a working Flutter widget you can preview.</p></div></div>
+    <div id="toolsContainer">
+        <h3>💬 AI Chat & Conversation</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="text chat type conversation context"><h4>Text Chat</h4><p>Type naturally. The AI remembers context and supports long conversations. Edit or delete messages anytime.</p></div>
+            <div class="card" data-keywords="voice chat microphone speak tap"><h4>Voice Chat</h4><p>Tap the mic and speak. The AI responds aloud. Works offline with downloaded voice packs.</p></div>
+            <div class="card" data-keywords="chain-of-thought reasoning step-by-step complex"><h4>Chain‑of‑Thought</h4><p>For complex questions, the AI shows its reasoning step by step. Collapsible panel keeps it tidy.</p></div>
+            <div class="card" data-keywords="jump to topic scroll to part find conversation"><h4>Jump to Topic</h4><p>Say “Take me to where we talked about cars” and the chat scrolls to that exact spot.</p></div>
+        </div>
+
+        <h3>🎙️ Voice & Wake Word</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="wake word hey celestial listening on-device privacy"><h4>Wake Word</h4><p>Say “Hey Celestial” even when the phone is locked. On‑device detection, zero cloud listening.</p></div>
+            <div class="card" data-keywords="voice commands control phone settings wifi bluetooth volume"><h4>Voice Commands</h4><p>Control your phone: “Turn on Wi‑Fi”, “Volume up”, “Call Mum”, “Play music”.</p></div>
+            <div class="card" data-keywords="custom commands macros shortcuts multi-step gym mode"><h4>Custom Commands / Macros</h4><p>Create multi‑step shortcuts. “Gym Mode” = DND + playlist + timer. Record taps or type actions.</p></div>
+            <div class="card" data-keywords="vernacular voices local accent download natural"><h4>Vernacular Voices</h4><p>Download accents for different regions. The AI sounds like someone from your community.</p></div>
+        </div>
+
+        <h3>📚 Knowledge & Learning</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="offline wikipedia download language pack encyclopedia"><h4>Offline Wikipedia</h4><p>Download language packs. Search the full encyclopedia without internet. Text‑only or with images.</p></div>
+            <div class="card" data-keywords="research feed topics living summary briefing"><h4>Research Feed</h4><p>Add topics. The AI scans the web and builds a living summary. Stay briefed automatically.</p></div>
+            <div class="card" data-keywords="flashcards learning spaced repetition remember"><h4>Flashcards & Learning</h4><p>Highlight any AI response, turn it into a flashcard. Spaced repetition helps you remember.</p></div>
+            <div class="card" data-keywords="fact-check live cross-reference claims verify"><h4>Fact‑Check Live</h4><p>While browsing, tap “Fact‑Check” to cross‑reference claims with verified sources.</p></div>
+        </div>
+
+        <h3>🎵 Media & Entertainment</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="music launcher spotify youtube music apple deezer audiomack"><h4>Music Launcher</h4><p>Card‑based grid. One‑tap to open Spotify, YouTube Music, Apple Music, and more. See what's installed.</p></div>
+            <div class="card" data-keywords="movie launcher netflix prime disney showmax video"><h4>Movie Launcher</h4><p>Same for Netflix, Prime Video, Disney+, Showmax. Quick play, last watched indicator.</p></div>
+            <div class="card" data-keywords="local music player album art lyrics playlist equalizer"><h4>Local Music Player</h4><p>Full player with album art, lyrics, playlists, equalizer, bass boost, and queue management.</p></div>
+            <div class="card" data-keywords="local video player subtitles resume watching quality aspect ratio"><h4>Local Video Player</h4><p>Play your files. Subtitles, resume watching, aspect ratio control, watch history.</p></div>
+        </div>
+
+        <h3>💪 Health & Wellness</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="health dashboard steps calories sleep heart rate water"><h4>Health Dashboard</h4><p>Steps, calories, sleep, heart rate, water, weight. All encrypted locally.</p></div>
+            <div class="card" data-keywords="voice logging log water weight quick hands-free"><h4>Voice Logging</h4><p>“Log water 500ml”, “Log weight 70kg”. Quick hands‑free tracking.</p></div>
+            <div class="card" data-keywords="first aid guide cpr burns choking fractures offline"><h4>First Aid Guide</h4><p>CPR, burns, choking, fractures, seizures, stroke, allergies. Offline, step‑by‑step with illustrations.</p></div>
+            <div class="card" data-keywords="wellness mood check-in guided breathing meditation journaling"><h4>Wellness Tools</h4><p>Mood check‑in, guided breathing, meditation, journaling prompts.</p></div>
+        </div>
+
+        <h3>🔧 Productivity & Automation</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="recurring tasks reminders every monday morning"><h4>Recurring Tasks</h4><p>“Remind me every Monday at 8 AM to check inventory.” Linked to custom commands.</p></div>
+            <div class="card" data-keywords="visual workflow builder drag-and-drop automation"><h4>Visual Workflow Builder</h4><p>Drag‑and‑drop automations. “If Bluetooth connects to car → start driving mode.”</p></div>
+            <div class="card" data-keywords="email sms automation auto-reply rules when mum texts"><h4>Email / SMS Automation</h4><p>Auto‑reply rules. “When Mum texts → reply I'm driving.” Opt‑in, secure.</p></div>
+            <div class="card" data-keywords="calendar intelligence meeting times schedule briefs conflicts"><h4>Calendar Intelligence</h4><p>Analyzes your schedule. Suggests meeting times, prepares briefs, flags conflicts.</p></div>
+        </div>
+
+        <h3>🌐 Browser & Web</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="in-app browser tabs bookmarks history google duckduckgo bing"><h4>In‑App Browser</h4><p>Tabs, bookmarks, history. Multiple search engines (Google, DuckDuckGo, Bing).</p></div>
+            <div class="card" data-keywords="read aloud summarize page tts"><h4>Read Aloud & Summarize</h4><p>Tap a button to hear any page read aloud, or get a one‑paragraph summary.</p></div>
+            <div class="card" data-keywords="offline reader save pages articles pdf"><h4>Offline Reader</h4><p>Save pages for later. Read articles, PDFs, and websites without internet.</p></div>
+            <div class="card" data-keywords="web content extraction product page price title image"><h4>Web Content Extraction</h4><p>Long‑press on a product page, the AI extracts price, title, image – structured data.</p></div>
+        </div>
+
+        <h3>🔐 Privacy & Security</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="secret vault encrypted notes passwords fingerprint"><h4>Secret Vault</h4><p>Encrypted notes and passwords. Fingerprint‑protected. Even we can't see inside.</p></div>
+            <div class="card" data-keywords="cloud backup encrypted password restore device"><h4>Cloud Backup</h4><p>Encrypted backup with your own password. We don't have the key. Restore on any device.</p></div>
+            <div class="card" data-keywords="data purge auto-delete old conversations retention"><h4>Data Purge</h4><p>Auto‑delete old conversations after a set period. Full control in Settings.</p></div>
+            <div class="card" data-keywords="anti-scam detection sms email warning dangerous link"><h4>Anti‑Scam Detection</h4><p>Scans SMS and emails for scam patterns. Warns you before you click a dangerous link.</p></div>
+        </div>
+
+        <h3>🚗 On the Go</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="android auto carplay car screen hands-free driving"><h4>Android Auto / CarPlay</h4><p>Hands‑free AI on your car screen. Voice‑only while driving. Safety lock.</p></div>
+            <div class="card" data-keywords="offline navigation maps download turn-by-turn"><h4>Offline Navigation</h4><p>Download maps. Turn‑by‑turn directions, offline place search, voice‑guided.</p></div>
+            <div class="card" data-keywords="wear os watch smartwatch voice fitness"><h4>Wear OS</h4><p>Companion app for your watch. Voice commands, fitness glance, quick replies.</p></div>
+            <div class="card" data-keywords="tv mode android tv large cards voice-first"><h4>TV Mode</h4><p>Android TV interface. Large cards, voice‑first, control your TV with “Hey Celestial”.</p></div>
+        </div>
+
+        <h3>👩‍💻 For Developers & Creators</h3>
+        <div class="tool-grid">
+            <div class="card" data-keywords="code assistant write review code snippets multi-language"><h4>Code Assistant</h4><p>Write and review code snippets. Multi‑language. On‑device for privacy.</p></div>
+            <div class="card" data-keywords="api playground test http requests boilerplate code"><h4>API Playground</h4><p>Send test HTTP requests. AI generates boilerplate code from responses.</p></div>
+            <div class="card" data-keywords="idea validator app idea market research feasibility"><h4>Idea Validator</h4><p>Describe an app idea. AI researches the market and gives a feasibility report.</p></div>
+            <div class="card" data-keywords="ui prototyper describe screen flutter widget generate"><h4>UI Prototyper</h4><p>Describe a screen. The AI generates a working Flutter widget you can preview.</p></div>
+        </div>
+    </div>
 
     <h2 id="howtouse">📖 How to Use Celestial AI</h2>
-    <h3>Start a Conversation</h3><ol><li>Open the app and tap the glowing orb or the Chat icon.</li><li>Type your message and press Enter, or tap the microphone and speak.</li><li>Wait for the orb to pulse and show a thinking animation; the response appears shortly.</li><li>Tap the 👍 or 👎 below the response to give quick feedback.</li><li>Long‑press any message for options: Edit, Delete, Copy, Highlight.</li></ol>
-    <h3>Use Voice Commands</h3><ol><li>Go to <b>Settings → Voice → Wake Word</b> and turn on “Hey Celestial”.</li><li>From any screen, say <b>“Hey Celestial”</b> followed by a command, e.g., “What's the weather today?”</li><li>The Voice Assistant screen opens and the orb starts listening. Speak clearly.</li><li>To create a custom command, go to <b>Commands → +</b>. Enter a trigger phrase and the actions.</li></ol>
-    <h3>Use Offline Mode</h3><ol><li>Go to <b>Settings → Offline Knowledge</b>.</li><li>Tap the language you want and choose “Download” (text‑only or full).</li><li>Once downloaded, toggle <b>Force Offline</b> in <b>Settings → AI Preferences</b>.</li><li>Now you can chat, search Wikipedia, and use the first‑aid guide without internet.</li></ol>
-    <h3>Download a Map for Offline Navigation</h3><ol><li>Go to <b>Maps → Download Region</b>.</li><li>Pick a city or country and tap <b>Download</b> (Wi‑Fi recommended).</li><li>Once downloaded, say “Navigate to [place]” or tap the map and enter a destination.</li></ol>
-    <h3>Create a Secure Backup</h3><ol><li>Go to <b>Settings → Cloud Backup</b>.</li><li>Toggle <b>Auto Backup</b> on. Choose frequency (daily recommended).</li><li>Choose a strong backup password. <b>Do not lose it</b> – we can't recover it.</li><li>Tap <b>Back Up Now</b> to create your first encrypted backup.</li></ol>
-    <h3>Set Up a Recurring Reminder</h3><ol><li>Say <b>“Remind me every Monday at 8 AM to check inventory”</b>.</li><li>The app creates the reminder. You can view and edit it in the <b>Tasks</b> screen.</li></ol>
+    <div id="howToContainer">
+        <div data-keywords="start conversation chat orb tap type speak"><h3>Start a Conversation</h3><ol><li>Open the app and tap the glowing orb or the Chat icon.</li><li>Type your message and press Enter, or tap the microphone and speak.</li><li>Wait for the orb to pulse and show a thinking animation; the response appears shortly.</li><li>Tap the 👍 or 👎 below the response to give quick feedback.</li><li>Long‑press any message for options: Edit, Delete, Copy, Highlight.</li></ol></div>
+        <div data-keywords="use voice commands wake word hey celestial settings"><h3>Use Voice Commands</h3><ol><li>Go to <b>Settings → Voice → Wake Word</b> and turn on “Hey Celestial”.</li><li>From any screen, say <b>“Hey Celestial”</b> followed by a command, e.g., “What's the weather today?”</li><li>The Voice Assistant screen opens and the orb starts listening. Speak clearly.</li><li>To create a custom command, go to <b>Commands → +</b>. Enter a trigger phrase and the actions.</li></ol></div>
+        <div data-keywords="use offline mode download packs settings force offline"><h3>Use Offline Mode</h3><ol><li>Go to <b>Settings → Offline Knowledge</b>.</li><li>Tap the language you want and choose “Download” (text‑only or full).</li><li>Once downloaded, toggle <b>Force Offline</b> in <b>Settings → AI Preferences</b>.</li><li>Now you can chat, search Wikipedia, and use the first‑aid guide without internet.</li></ol></div>
+        <div data-keywords="download map offline navigation region city"><h3>Download a Map for Offline Navigation</h3><ol><li>Go to <b>Maps → Download Region</b>.</li><li>Pick a city or country and tap <b>Download</b> (Wi‑Fi recommended).</li><li>Once downloaded, say “Navigate to [place]” or tap the map and enter a destination.</li></ol></div>
+        <div data-keywords="create secure backup cloud password encrypt"><h3>Create a Secure Backup</h3><ol><li>Go to <b>Settings → Cloud Backup</b>.</li><li>Toggle <b>Auto Backup</b> on. Choose frequency (daily recommended).</li><li>Choose a strong backup password. <b>Do not lose it</b> – we can't recover it.</li><li>Tap <b>Back Up Now</b> to create your first encrypted backup.</li></ol></div>
+        <div data-keywords="set up recurring reminder voice tasks"><h3>Set Up a Recurring Reminder</h3><ol><li>Say <b>“Remind me every Monday at 8 AM to check inventory”</b>.</li><li>The app creates the reminder. You can view and edit it in the <b>Tasks</b> screen.</li></ol></div>
+    </div>
+
+    <h2 id="quiz">🤔 Which plan is right for me?</h2>
+    <div class="quiz" id="quizContainer">
+        <label>Do you need team features (shared workspace, meeting transcripts)?</label>
+        <select id="quizTeam"><option value="no">No</option><option value="yes">Yes</option></select>
+        <label>Do you need unlimited daily usage?</label>
+        <select id="quizUsage"><option value="no">No</option><option value="yes">Yes</option></select>
+        <button onclick="runQuiz()">Get recommendation</button>
+        <p id="quizResult" style="margin-top:1rem; font-weight:600;"></p>
+    </div>
 
     <h2 id="plans">💎 Plans & Pricing</h2>
     <div class="plan-grid">
@@ -149,19 +228,19 @@
     </div>
 
     <h2 id="faq">❓ Frequently Asked Questions</h2>
-    <div class="faq">
-        <details><summary>Is Celestial AI really free?</summary><p>Yes. Basic features are free forever with fair daily limits. You only pay for Pro or Business.</p></details>
-        <details><summary>Does the app listen to me all the time?</summary><p>No. The optional “Hey Celestial” wake‑word listens only for that phrase, on‑device.</p></details>
-        <details><summary>Can it download music or movies?</summary><p>No. It does not pirate media. It controls your existing apps and plays your own local files.</p></details>
-        <details><summary>What languages are supported?</summary><p>English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Kinyarwanda, Arabic, Japanese, Korean, Chinese, and more.</p></details>
-        <details><summary>Is my data safe?</summary><p>Conversations and health data are encrypted on‑device. We never sell your data.</p></details>
-        <details><summary>How do I cancel my subscription?</summary><p>Cancel anytime from Google Play → Subscriptions. Pro access continues until the billing period ends.</p></details>
-        <details><summary>Does the app work without internet?</summary><p>Yes! Download offline packs (AI model, maps, Wikipedia) and use it completely offline.</p></details>
-        <details><summary>How do I delete my data?</summary><p>Go to Settings → Privacy & Data → Delete Account. Everything is removed within 30 days.</p></details>
-        <details><summary>Can I use the app on multiple devices?</summary><p>Yes. Log in on your phone, tablet, and watch. Cloud backup keeps everything in sync.</p></details>
+    <div class="faq" id="faqContainer">
+        <details data-keywords="is celestial ai really free cost price"><summary>Is Celestial AI really free?</summary><p>Yes. Basic features are free forever with fair daily limits. You only pay for Pro or Business.</p></details>
+        <details data-keywords="does the app listen to me all the time wake word optional"><summary>Does the app listen to me all the time?</summary><p>No. The optional “Hey Celestial” wake‑word listens only for that phrase, on‑device. Nothing is uploaded until you speak a command.</p></details>
+        <details data-keywords="can it download music movies pirate copyright media"><summary>Can it download music or movies?</summary><p>No. It does not pirate media. It controls your existing apps and plays your own local files.</p></details>
+        <details data-keywords="what languages are supported hausa yoruba igbo swahili french arabic"><summary>What languages are supported?</summary><p>English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Kinyarwanda, Arabic, Japanese, Korean, Chinese, and more.</p></details>
+        <details data-keywords="is my data safe secure encrypted privacy"><summary>Is my data safe?</summary><p>Conversations and health data are encrypted on‑device. We never sell your data.</p></details>
+        <details data-keywords="how do i cancel my subscription google play"><summary>How do I cancel my subscription?</summary><p>Cancel anytime from Google Play → Subscriptions. Pro access continues until the billing period ends.</p></details>
+        <details data-keywords="does the app work without internet offline mode"><summary>Does the app work without internet?</summary><p>Yes! Download offline packs (AI model, maps, Wikipedia) and use it completely offline.</p></details>
+        <details data-keywords="how do i delete my data account remove"><summary>How do I delete my data?</summary><p>Go to Settings → Privacy & Data → Delete Account. Everything is removed within 30 days.</p></details>
+        <details data-keywords="can i use the app on multiple devices phone tablet watch sync"><summary>Can I use the app on multiple devices?</summary><p>Yes. Log in on your phone, tablet, and watch. Cloud backup keeps everything in sync.</p></details>
     </div>
 
-    <h2>📲 Get the App</h2><p>Available now on the Google Play Store.</p>
+    <h2>📲 Get the App</h2>
     <p><a href="https://play.google.com/store/apps/details?id=com.celestial.ai.v6pro" class="btn">Download on Google Play</a></p>
 
     <h2 id="contact">📧 Contact Us</h2>
@@ -177,15 +256,22 @@
 <footer>© Celestial Tech – Built in Uganda, for the world. | <a href="#">Privacy</a> | <a href="#">Terms</a></footer>
 
 <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+<button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">🌓</button>
 
 <button id="chatbot-toggle" onclick="toggleChat()">💬</button>
 <div id="chatbot-window">
     <div id="chatbot-header">
         <span>Celestial AI Assistant</span>
-        <button onclick="toggleChat()" style="background:none;border:none;color:#00C8FF;font-weight:bold;cursor:pointer;">✕</button>
+        <button onclick="toggleChat()" style="background:none;border:none;color:var(--primary);font-weight:bold;cursor:pointer;">✕</button>
     </div>
     <div id="chatbot-messages">
         <div class="chat-msg bot">Hi! I can explain any feature, tool, plan, or setting in Celestial AI in full detail. Ask me anything!</div>
+    </div>
+    <div class="chip-bar" id="suggestedChips">
+        <button class="chip" onclick="sendSuggested('What features does the app have?')">Features?</button>
+        <button class="chip" onclick="sendSuggested('How do I use it offline?')">Offline?</button>
+        <button class="chip" onclick="sendSuggested('What are the plans?')">Plans?</button>
+        <button class="chip" onclick="sendSuggested('How do I back up my data?')">Backup?</button>
     </div>
     <div id="chatbot-input-area">
         <input type="text" id="chatbot-input" placeholder="Type your question..." onkeypress="if(event.key==='Enter') sendMessage()">
@@ -193,161 +279,140 @@
     </div>
 </div>
 
+<div class="feedback" id="feedback-features"><span>Was this helpful?</span> <button onclick="giveFeedback('feedback-features','yes')">👍</button> <button onclick="giveFeedback('feedback-features','no')">👎</button></div>
+<div class="feedback" id="feedback-tools"><button onclick="giveFeedback('feedback-tools','yes')">👍</button> <button onclick="giveFeedback('feedback-tools','no')">👎</button></div>
+
 <script>
-// ---- Toggle mobile menu ----
-function toggleMenu() {
-    document.getElementById('navLinks').classList.toggle('show');
-}
-
-// ---- Show/hide back-to-top button ----
-window.onscroll = function() {
-    const btn = document.getElementById('back-to-top');
-    btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
-};
-
-// ---- TTS / Voice (free, client-side, no cookies) ----
-function speakText(text) {
-    if (!('speechSynthesis' in window)) return;
-    const cleanText = text.replace(/<[^>]*>/g, '');
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'en-US';
-    const voices = speechSynthesis.getVoices();
-    if (voices.length > 0) {
-        const preferred = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en')) || voices[0];
-        utterance.voice = preferred;
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('show'); }
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
     }
-    speechSynthesis.cancel();
-    speechSynthesis.speak(utterance);
-}
+    if(localStorage.getItem('theme') === 'light') document.body.classList.add('light');
+    window.onscroll = function() { document.getElementById('back-to-top').style.display = window.scrollY > 400 ? 'flex' : 'none'; };
 
-// ---- Chatbot engine ----
-const generalIntents = [
-    { phrases: ["what is the app", "what is celestial", "about the app", "tell me about celestial", "explain celestial", "describe the app", "overview of the app", "what can you tell me about the app", "what is this app"], answer: "<b>Celestial AI</b> is a powerful, voice-first personal assistant for Android phones.<br><br>It lets you chat by text or voice, control your device with voice commands, work completely offline, translate languages in real time, track your health, and store sensitive information in a secure Vault.<br><br>It supports over 20 languages including Hausa, Yoruba, Igbo, Swahili, French, and Arabic, with natural local accents.<br><br>The basic features are <b>free forever</b>. Pro and Business plans unlock unlimited usage, advanced AI models, team workspaces, and more.<br><br>You can ask me about any specific feature, tool, or plan — or visit the sections on this page for detailed breakdowns." },
-    { phrases: ["what features", "list features", "what can it do", "capabilities", "what are the features", "what does it have", "what does the app have", "features of the app", "what does it do"], answer: "<b>Celestial AI has a vast set of features organized into several categories:</b><br><br><b>💬 AI Chat & Conversation</b> – Text and voice chat, chain-of-thought reasoning, jump-to-topic navigation.<br><b>🎙️ Voice & Wake Word</b> – Hands‑free commands, custom macros, vernacular voices.<br><b>📚 Knowledge & Learning</b> – Offline Wikipedia, research feed, flashcards, fact-checking.<br><b>🎵 Media & Entertainment</b> – Music launcher, movie launcher, full local music and video players.<br><b>💪 Health & Wellness</b> – Health dashboard, voice logging, first-aid guide, wellness tools.<br><b>🔧 Productivity & Automation</b> – Recurring tasks, visual workflow builder, email/SMS automation, calendar intelligence.<br><b>🌐 Browser & Web</b> – In-app browser, read-aloud, offline reader, web content extraction.<br><b>🔐 Privacy & Security</b> – Secret Vault, cloud backup, data purge, anti-scam detection.<br><b>🚗 On the Go</b> – Android Auto, CarPlay, offline navigation, Wear OS, TV mode.<br><b>👩‍💻 For Developers</b> – Code assistant, API playground, idea validator, UI prototyper.<br><br>Scroll up to the <b>Tools & Capabilities</b> section for a full interactive breakdown. Ask me about any specific one!" },
-    { phrases: ["how to use", "how do i", "getting started", "beginner", "tutorial", "guide", "walkthrough"], answer: "Getting started is easy! After installing the app, create an account with your email or Google/Apple. The home screen has a glowing orb — tap it to start a chat, or tap the microphone to speak.<br><br>To use voice commands, say <b>\"Hey Celestial\"</b> and then your command. To go offline, download packs in <b>Settings → Offline Knowledge</b>.<br><br>Scroll up to the <b>How to Use</b> section on this page for step-by-step guides for common tasks." },
-    { phrases: ["what plans", "pricing", "cost", "subscription", "how much", "payment", "pay"], answer: "Celestial AI offers three plans:<br><br><b>Free</b> – 0 UGX forever. Daily limits, all basic features, offline mode, voice commands, first aid, health logging.<br><b>Pro</b> – From ≈5,600 UGX/week. Unlimited usage, advanced AI, extended offline memory, priority support, Pro creative tools.<br><b>Business</b> – ≈37,500 UGX/seat/month. Team workspace, shared knowledge base, meeting transcriptions, workflow automations, spending controls.<br><br>Prices are converted to your local currency by the app store." },
-    { phrases: ["privacy", "data", "safe", "secure", "sell", "tracking"], answer: "Your privacy is our priority. Conversations and health data are encrypted and stored on your device. Optional cloud backup is encrypted with a password only you know. We never sell your data, we never track you across other apps, and we don't use advertising cookies." },
-    { phrases: ["offline", "no internet", "data charges", "without connection", "airplane"], answer: "Yes! Celestial AI works fully offline. Download optional AI packs, language packs, maps, and Wikipedia content in Settings. Then toggle <b>Force Offline</b> in AI Preferences. You can chat, search, navigate, and get first-aid guidance without any internet connection." },
-    { phrases: ["languages", "speak", "language", "translation", "translate"], answer: "Celestial AI supports over 20 languages: English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, Arabic, Japanese, Korean, Mandarin Chinese, Hindi, Bengali, Russian, Italian, Turkish, Vietnamese, Thai, and more. The app can translate text and voice in real time, and you can download local accent voice packs." }
-];
+    function liveSearch() {
+        const q = document.getElementById('searchInput').value.toLowerCase();
+        document.querySelectorAll('[data-keywords]').forEach(el => {
+            const kw = el.getAttribute('data-keywords') || '';
+            el.style.display = (!q || kw.includes(q)) ? '' : 'none';
+        });
+    }
 
-const faq = [
-    { keywords: "sign up create account register login log in email password", answer: "<b>Creating an account</b><br><br>Open the app and tap <b>Sign Up</b>. Use email/password, Google, or Apple. If you forget your password, tap <b>Forgot Password</b> on the login screen." },
-    { keywords: "forgot password reset password", answer: "Tap <b>Forgot Password</b> on the login screen. Enter your email. We'll send a reset link. The link expires in 1 hour." },
-    { keywords: "delete account remove account erase", answer: "Go to <b>Settings → Privacy & Data → Delete Account</b>. All data removed within 30 days. Cancel subscriptions first." },
-    { keywords: "multiple devices phone tablet login same account", answer: "Yes, you can log in on your phone, tablet, and Wear OS watch. Sync via Cloud Backup." },
-    { keywords: "pro cost price how much pricing subscription", answer: "<b>Pro Plans</b><br>Weekly: $1.49/week (~5,600 UGX)<br>Monthly: $4.99/month (~18,700 UGX)<br>Annual: $49.99/year (~187,500 UGX)." },
-    { keywords: "business price cost per seat", answer: "<b>Business Plan</b>: $9.99/seat/month (~37,500 UGX). Team workspace, knowledge base, meeting transcripts, workflows, spending controls." },
-    { keywords: "cancel subscription stop unsubscribe", answer: "Cancel anytime: Google Play → Subscriptions → Celestial AI → Cancel. Pro access continues until billing period ends." },
-    { keywords: "refund money back", answer: "All sales final unless required by law. Billing issues? Email celestialarc85@gmail.com within 14 days." },
-    { keywords: "chat talk conversation write message", answer: "Tap the glowing orb or Chat icon. Type or speak. AI remembers context. Long‑press messages to edit, delete, copy, or highlight." },
-    { keywords: "voice commands wake word hey celestial speak listen", answer: "Enable in Settings → Voice → Wake Word. Say \"Hey Celestial\" then your command. Works from any screen, even when locked." },
-    { keywords: "custom commands macros shortcuts", answer: "Create multi‑step shortcuts. Go to Commands → +. Enter trigger phrase and actions. Pro users get unlimited steps." },
-    { keywords: "music player equalizer songs playlist", answer: "Full local music player with album art, lyrics, playlists, queue management, and built‑in equalizer with presets and custom bands." },
-    { keywords: "movie video player playback", answer: "Full video player with subtitles, resume watching, quality selector, aspect ratio controls, and watch history." },
-    { keywords: "media launch spotify netflix youtube", answer: "Music Launcher and Movie Launcher: card‑based grids to open streaming apps in one tap. See what's installed or install from Play Store." },
-    { keywords: "health steps sleep water wellness fitness", answer: "Connect to Health Connect. Track steps, calories, sleep, heart rate. Voice log: \"Log water 500ml\". AI Health Coach gives insights." },
-    { keywords: "first aid emergency accident injury", answer: "Offline first‑aid guide: CPR, burns, choking, fractures, seizures, stroke, allergies. Step‑by‑step text with illustrations." },
-    { keywords: "vault safe secure password storage", answer: "Encrypted Vault locked behind your fingerprint. Store passwords, notes, files. Even Celestial Tech cannot access it." },
-    { keywords: "browser web search internet", answer: "In‑app browser with tabs, bookmarks, Chrome sync, reader mode, multiple search engines, read‑aloud, and offline saving." },
-    { keywords: "search find locate conversations files settings", answer: "Universal search: tap the search icon to find anything — chats, files, settings, music, videos, calendar events." },
-    { keywords: "backup restore chat data", answer: "Enable Cloud Backup in Settings. Encrypted with your password. Restore on any device. We don't have the key." },
-    { keywords: "navigation maps offline gps", answer: "Download map regions, get turn‑by‑turn voice navigation offline. Search places without internet." },
-    { keywords: "wear os watch smartwatch", answer: "Wear OS companion app for voice commands, fitness, quick replies. Syncs with your phone." },
-    { keywords: "accessibility talkback screen reader color blind", answer: "Full accessibility: TalkBack, voice‑only mode, colour‑blind themes, dynamic text sizing, switch control, high‑contrast mode." },
-    { keywords: "dark theme appearance night mode", answer: "Neon dark theme by default. Other themes: Soft Light, High Contrast, Sepia, Amber/Night Shift, vision‑protective modes." },
-    { keywords: "reminder recurring task", answer: "Set one‑time or recurring reminders by voice. See all in Tasks screen. Link reminders to custom commands." },
-    { keywords: "transcribe meeting notes summarize", answer: "Business plan: record meetings, get full transcripts, AI‑generated summaries with action items and key decisions." },
-    { keywords: "smart home iot lights control", answer: "Control smart home devices via Google Home, Matter, or MQTT. Go to Settings → Connected Devices." },
-    { keywords: "code assistant developer api prototyper", answer: "Developer tools: Code generator/reviewer, API playground, app idea validator, UI prototyper. All built into the app." },
-    { keywords: "widget home screen quick access", answer: "Add the Celestial AI widget to your home screen. One‑tap microphone, shows last command." },
-    { keywords: "android auto carplay drive mode car", answer: "Android Auto and CarPlay support. Hands‑free AI on your car screen. Voice‑only while driving." },
-    { keywords: "battery drain power consumption", answer: "Optimized for low‑end phones. Wake‑word uses minimal power. Adjust performance in Settings." },
-    { keywords: "problem issue bug crash", answer: "Restart the app. If issue persists, email celestialarc85@gmail.com or use Settings → Support → Share Debug Logs." },
-    { keywords: "update app latest version", answer: "Updates happen automatically via Play Store. Check manually: Play Store → My apps & games." },
-    { keywords: "contact support help email", answer: "Email us at celestialarc85@gmail.com or use the contact form on this site. We respond within 24 hours." },
-    { keywords: "what is celestial ai about", answer: "Celestial AI is a smart, voice‑first assistant for Android. Works online and offline, speaks 20+ languages, helps with chat, tasks, health, and more. Free to start with affordable Pro plans." }
-];
+    function runQuiz() {
+        const team = document.getElementById('quizTeam').value;
+        const usage = document.getElementById('quizUsage').value;
+        let result = '';
+        if(team === 'yes') result = 'Business plan is best for you – team workspace, meeting transcripts, workflows.';
+        else if(usage === 'yes') result = 'Pro plan is perfect – unlimited usage, advanced AI.';
+        else result = 'Free plan fits your needs – all basics, offline mode, voice commands.';
+        document.getElementById('quizResult').textContent = result;
+    }
 
-const stopWords = new Set(["i","you","he","she","it","we","they","a","an","the","is","are","was","were","be","been","does","do","did","can","will","would","shall","should","to","of","in","for","on","with","at","by","from","what","when","where","which","who","why","how","about","and","or","but","not","no","yes","this","that","it","its","me","my","mine","your","yours","please","tell","say","hi","hello","hey","ok","okay","app","celestial"]);
+    function giveFeedback(id, type) {
+        const key = `feedback-${id}`;
+        if(localStorage.getItem(key)) return;
+        localStorage.setItem(key, type);
+        const el = document.getElementById(id);
+        if(el) el.innerHTML = '<span style="color:var(--primary)">Thanks for your feedback!</span>';
+    }
 
-function cleanAndSplit(text) { return text.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(w=>w.length>1&&!stopWords.has(w)); }
+    function speakText(text) {
+        if(!('speechSynthesis' in window)) return;
+        const clean = text.replace(/<[^>]*>/g, '');
+        const u = new SpeechSynthesisUtterance(clean);
+        u.lang = 'en-US';
+        const voices = speechSynthesis.getVoices();
+        if(voices.length) u.voice = voices.find(v => v.name.includes('Google') && v.lang.startsWith('en')) || voices[0];
+        speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }
 
-function similarityScore(a,b) {
-    const wa = new Set(a.split(/\s+/)), wb = new Set(b.split(/\s+/));
-    let overlap = 0; for(const w of wa) if(wb.has(w)) overlap++;
-    const union = new Set([...wa,...wb]);
-    return union.size ? overlap/union.size : 0;
-}
+    const generalIntents = [
+        { phrases: ["what is the app", "what is celestial", "about the app", "tell me about celestial", "explain celestial", "describe the app", "overview of the app", "what can you tell me about the app", "what is this app"], answer: "<b>Celestial AI</b> is a powerful, voice-first personal assistant for Android phones.<br><br>It lets you chat by text or voice, control your device with voice commands, work completely offline, translate languages in real time, track your health, and store sensitive information in a secure Vault.<br><br>It supports over 20 languages including Hausa, Yoruba, Igbo, Swahili, French, and Arabic, with natural local accents.<br><br>The basic features are <b>free forever</b>. Pro and Business plans unlock unlimited usage, advanced AI models, team workspaces, and more.<br><br>You can ask me about any specific feature, tool, or plan — or visit the sections on this page for detailed breakdowns." },
+        { phrases: ["what features", "list features", "what can it do", "capabilities", "what are the features", "what does it have", "what does the app have", "features of the app", "what does it do"], answer: "<b>Celestial AI has a vast set of features organized into several categories:</b><br><br><b>💬 AI Chat & Conversation</b> – Text and voice chat, chain-of-thought reasoning, jump-to-topic navigation.<br><b>🎙️ Voice & Wake Word</b> – Hands‑free commands, custom macros, vernacular voices.<br><b>📚 Knowledge & Learning</b> – Offline Wikipedia, research feed, flashcards, fact-checking.<br><b>🎵 Media & Entertainment</b> – Music launcher, movie launcher, full local music and video players.<br><b>💪 Health & Wellness</b> – Health dashboard, voice logging, first-aid guide, wellness tools.<br><b>🔧 Productivity & Automation</b> – Recurring tasks, visual workflow builder, email/SMS automation, calendar intelligence.<br><b>🌐 Browser & Web</b> – In-app browser, read-aloud, offline reader, web content extraction.<br><b>🔐 Privacy & Security</b> – Secret Vault, cloud backup, data purge, anti-scam detection.<br><b>🚗 On the Go</b> – Android Auto, CarPlay, offline navigation, Wear OS, TV mode.<br><b>👩‍💻 For Developers</b> – Code assistant, API playground, idea validator, UI prototyper.<br><br>Scroll up to the <b>Tools & Capabilities</b> section for a full interactive breakdown. Ask me about any specific one!" },
+        { phrases: ["how to use", "how do i", "getting started", "beginner", "tutorial", "guide", "walkthrough"], answer: "Getting started is easy! After installing the app, create an account with your email or Google/Apple. The home screen has a glowing orb — tap it to start a chat, or tap the microphone to speak.<br><br>To use voice commands, say <b>\"Hey Celestial\"</b> and then your command. To go offline, download packs in <b>Settings → Offline Knowledge</b>.<br><br>Scroll up to the <b>How to Use</b> section on this page for step-by-step guides for common tasks." },
+        { phrases: ["what plans", "pricing", "cost", "subscription", "how much", "payment", "pay"], answer: "Celestial AI offers three plans:<br><br><b>Free</b> – 0 UGX forever. Daily limits, all basic features, offline mode, voice commands, first aid, health logging.<br><b>Pro</b> – From ≈5,600 UGX/week. Unlimited usage, advanced AI, extended offline memory, priority support, Pro creative tools.<br><b>Business</b> – ≈37,500 UGX/seat/month. Team workspace, shared knowledge base, meeting transcriptions, workflow automations, spending controls.<br><br>Prices are converted to your local currency by the app store." },
+        { phrases: ["privacy", "data", "safe", "secure", "sell", "tracking"], answer: "Your privacy is our priority. Conversations and health data are encrypted and stored on your device. Optional cloud backup is encrypted with a password only you know. We never sell your data, we never track you across other apps, and we don't use advertising cookies." },
+        { phrases: ["offline", "no internet", "data charges", "without connection", "airplane"], answer: "Yes! Celestial AI works fully offline. Download optional AI packs, language packs, maps, and Wikipedia content in Settings. Then toggle <b>Force Offline</b> in AI Preferences. You can chat, search, navigate, and get first-aid guidance without any internet connection." },
+        { phrases: ["languages", "speak", "language", "translation", "translate"], answer: "Celestial AI supports over 20 languages: English, French, Spanish, Hausa, Yoruba, Igbo, Swahili, Zulu, Amharic, Twi, Kinyarwanda, Arabic, Japanese, Korean, Mandarin Chinese, Hindi, Bengali, Russian, Italian, Turkish, Vietnamese, Thai, and more. The app can translate text and voice in real time, and you can download local accent voice packs." }
+    ];
 
-function matchGeneralIntent(query) {
-    const q = query.toLowerCase().replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();
-    let best = { answer: null, score: 0 };
-    for(const intent of generalIntents) {
-        for(const phrase of intent.phrases) {
-            const s = similarityScore(q, phrase);
-            if(s > best.score) { best.score = s; best.answer = intent.answer; }
+    const faq = [
+        { keywords: "sign up create account register login log in email password", answer: "<b>Creating an account</b><br><br>Open the app and tap <b>Sign Up</b>. Use email/password, Google, or Apple. If you forget your password, tap <b>Forgot Password</b> on the login screen." },
+        { keywords: "forgot password reset password", answer: "Tap <b>Forgot Password</b> on the login screen. Enter your email. We'll send a reset link. The link expires in 1 hour." },
+        { keywords: "delete account remove account erase", answer: "Go to <b>Settings → Privacy & Data → Delete Account</b>. All data removed within 30 days. Cancel subscriptions first." },
+        { keywords: "multiple devices phone tablet login same account", answer: "Yes, you can log in on your phone, tablet, and Wear OS watch. Sync via Cloud Backup." },
+        { keywords: "pro cost price how much pricing subscription weekly monthly annual", answer: "<b>Pro Plans</b><br>Weekly: $1.49/week (~5,600 UGX)<br>Monthly: $4.99/month (~18,700 UGX)<br>Annual: $49.99/year (~187,500 UGX)." },
+        { keywords: "business price cost per seat", answer: "<b>Business Plan</b>: $9.99/seat/month (~37,500 UGX). Team workspace, knowledge base, meeting transcripts, workflows, spending controls." },
+        { keywords: "cancel subscription stop unsubscribe", answer: "Cancel anytime: Google Play → Subscriptions → Celestial AI → Cancel. Pro access continues until billing period ends." },
+        { keywords: "refund money back", answer: "All sales final unless required by law. Billing issues? Email celestialarc85@gmail.com within 14 days." },
+        { keywords: "chat talk conversation write message text type speak", answer: "Tap the glowing orb or Chat icon. Type or speak. AI remembers context. Long‑press messages to edit, delete, copy, or highlight." },
+        { keywords: "voice commands wake word hey celestial speak listen", answer: "Enable in Settings → Voice → Wake Word. Say \"Hey Celestial\" then your command. Works from any screen, even when locked." },
+        { keywords: "custom commands macros shortcuts multi-step gym mode", answer: "Create multi‑step shortcuts. Go to Commands → +. Enter trigger phrase and actions. Pro users get unlimited steps." },
+        { keywords: "music player equalizer songs playlist album art lyrics", answer: "Full local music player with album art, lyrics, playlists, queue management, and built‑in equalizer with presets and custom bands." },
+        { keywords: "movie video player playback subtitles resume watching", answer: "Full video player with subtitles, resume watching, quality selector, aspect ratio controls, and watch history." },
+        { keywords: "media launch spotify netflix youtube launcher card grid", answer: "Music Launcher and Movie Launcher: card‑based grids to open streaming apps in one tap. See what's installed or install from Play Store." },
+        { keywords: "health steps sleep water wellness fitness connect track", answer: "Connect to Health Connect. Track steps, calories, sleep, heart rate. Voice log: \"Log water 500ml\". AI Health Coach gives insights." },
+        { keywords: "first aid emergency accident injury cpr burns choking fractures", answer: "Offline first‑aid guide: CPR, burns, choking, fractures, seizures, stroke, allergies. Step‑by‑step text with illustrations." },
+      { keywords: "vault safe secure password storage fingerprint encrypted", answer: "Encrypted Vault locked behind your fingerprint. Store passwords, notes, files. Even Celestial Tech cannot access it." },
+        { keywords: "browser web search internet tabs bookmarks history reader mode", answer: "In‑app browser with tabs, bookmarks, Chrome sync, reader mode, multiple search engines, read‑aloud, and offline saving." },
+        { keywords: "search find locate conversations files settings universal", answer: "Universal search: tap the search icon to find anything — chats, files, settings, music, videos, calendar events." },
+        { keywords: "backup restore chat data cloud encrypted password", answer: "Enable Cloud Backup in Settings. Encrypted with your password. Restore on any device. We don't have the key." },
+        { keywords: "navigation maps offline gps turn-by-turn voice directions", answer: "Download map regions, get turn‑by‑turn voice navigation offline. Search places without internet." },
+        { keywords: "wear os watch smartwatch voice fitness quick replies", answer: "Wear OS companion app for voice commands, fitness, quick replies. Syncs with your phone." },
+        { keywords: "accessibility talkback screen reader color blind voice-only switch control", answer: "Full accessibility: TalkBack, voice‑only mode, colour‑blind themes, dynamic text sizing, switch control, high‑contrast mode." },
+        { keywords: "dark theme appearance night mode light high contrast sepia amber", answer: "Neon dark theme by default. Other themes: Soft Light, High Contrast, Sepia, Amber/Night Shift, vision‑protective modes." },
+        { keywords: "reminder recurring task every monday morning", answer: "Set one‑time or recurring reminders by voice. See all in Tasks screen. Link reminders to custom commands." },
+        { keywords: "transcribe meeting notes summarize business plan record audio", answer: "Business plan: record meetings, get full transcripts, AI‑generated summaries with action items and key decisions." },
+        { keywords: "smart home iot lights control google home matter mqtt", answer: "Control smart home devices via Google Home, Matter, or MQTT. Go to Settings → Connected Devices." },
+        { keywords: "code assistant developer api prototyper idea validator", answer: "Developer tools: Code generator/reviewer, API playground, app idea validator, UI prototyper. All built into the app." },
+        { keywords: "widget home screen quick access one-tap microphone", answer: "Add the Celestial AI widget to your home screen. One‑tap microphone, shows last command." },
+        { keywords: "android auto carplay drive mode car vehicle hands-free", answer: "Android Auto and CarPlay support. Hands‑free AI on your car screen. Voice‑only while driving." },
+        { keywords: "battery drain power consumption low-end phone optimization", answer: "Optimized for low‑end phones. Wake‑word uses minimal power. Adjust performance in Settings." },
+        { keywords: "problem issue bug crash error restart support debug logs", answer: "Restart the app. If issue persists, email celestialarc85@gmail.com or use Settings → Support → Share Debug Logs." },
+        { keywords: "update app latest version google play store", answer: "Updates happen automatically via Play Store. Check manually: Play Store → My apps & games." },
+        { keywords: "contact support help email form", answer: "Email us at celestialarc85@gmail.com or use the contact form on this site. We respond within 24 hours." },
+        { keywords: "what is celestial ai about description overview", answer: "Celestial AI is a smart, voice‑first assistant for Android. Works online and offline, speaks 20+ languages, helps with chat, tasks, health, and more. Free to start with affordable Pro plans." }
+    ];
+
+    const stopWords = new Set(["i","you","he","she","it","we","they","a","an","the","is","are","was","were","be","been","does","do","did","can","will","would","shall","should","to","of","in","for","on","with","at","by","from","what","when","where","which","who","why","how","about","and","or","but","not","no","yes","this","that","it","its","me","my","mine","your","yours","please","tell","say","hi","hello","hey","ok","okay","app","celestial"]);
+    function cleanAndSplit(text) { return text.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(w=>w.length>1&&!stopWords.has(w)); }
+    function similarityScore(a,b) { const wa=new Set(a.split(/\s+/)),wb=new Set(b.split(/\s+/));let o=0;for(const w of wa)if(wb.has(w))o++;const u=new Set([...wa,...wb]);return u.size?o/u.size:0; }
+    function matchGeneralIntent(query) { const q=query.toLowerCase().replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim();let b={answer:null,score:0};for(const i of generalIntents){for(const p of i.phrases){const s=similarityScore(q,p);if(s>b.score){b.score=s;b.answer=i.answer;}}}return b.score>=0.35?b.answer:null; }
+    function matchKeywords(query) { const w=cleanAndSplit(query);if(!w.length)return null;let b={answer:null,score:0};for(const e of faq){const ks=new Set(e.keywords.split(' '));let m=0;for(const ww of w)if(ks.has(ww))m++;const s=m/w.length;if(s>b.score){b.score=s;b.answer=e.answer;}}return b.score>=0.2?b.answer:null; }
+    function findAnswer(query) { return matchGeneralIntent(query) || matchKeywords(query) || null; }
+
+    let addMessage = function(text, isUser) {
+        const msgs = document.getElementById('chatbot-messages');
+        const div = document.createElement('div');
+        div.className = 'chat-msg ' + (isUser ? 'user' : 'bot');
+        div.innerHTML = text;
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+        if(!isUser) {
+            const spk = document.createElement('span');
+            spk.innerHTML = ' 🔊'; spk.style.cursor = 'pointer'; spk.style.marginLeft = '8px';
+            spk.title = 'Read aloud'; spk.onclick = function(e) { e.stopPropagation(); speakText(text); };
+            div.appendChild(spk);
         }
+    };
+    function sendMessage() {
+        const input = document.getElementById('chatbot-input');
+        const query = input.value.trim(); if(!query) return;
+        addMessage(query, true); input.value = '';
+        const answer = findAnswer(query);
+        if(answer) addMessage(answer, false);
+        else addMessage("I'm sorry, I don't have a detailed answer for that yet. Would you like to send a message to the team? <br><br><a href='mailto:celestialarc85@gmail.com' style='color:var(--primary)'>Tap here to email us</a>", false);
     }
-    return best.score >= 0.35 ? best.answer : null;
-}
+    function sendSuggested(q) { document.getElementById('chatbot-input').value = q; sendMessage(); }
+    function toggleChat() { const win = document.getElementById('chatbot-window'); win.style.display = win.style.display === 'flex' ? 'none' : 'flex'; }
 
-function matchKeywords(query) {
-    const words = cleanAndSplit(query);
-    if(!words.length) return null;
-    let best = { answer: null, score: 0 };
-    for(const entry of faq) {
-        const kset = new Set(entry.keywords.split(' '));
-        let match = 0;
-        for(const w of words) if(kset.has(w)) match++;
-        const s = match / words.length;
-        if(s > best.score) { best.score = s; best.answer = entry.answer; }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('data:application/javascript,' + encodeURIComponent(
+            "self.addEventListener('install',e=>{e.waitUntil(caches.open('celestial-v1').then(c=>c.addAll(['/index.html'])))})" +
+            "self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)))})"
+        ));
     }
-    return best.score >= 0.2 ? best.answer : null;
-}
-
-function findAnswer(query) {
-    return matchGeneralIntent(query) || matchKeywords(query) || null;
-}
-
-let addMessage = function(text, isUser) {
-    const msgs = document.getElementById('chatbot-messages');
-    const div = document.createElement('div');
-    div.className = 'chat-msg ' + (isUser ? 'user' : 'bot');
-    div.innerHTML = text;
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-
-    // Add speaker icon for bot messages
-    if(!isUser) {
-        const spk = document.createElement('span');
-        spk.innerHTML = ' 🔊';
-        spk.style.cursor = 'pointer';
-        spk.style.marginLeft = '8px';
-        spk.title = 'Read aloud';
-        spk.onclick = function(e) { e.stopPropagation(); speakText(text); };
-        div.appendChild(spk);
-    }
-};
-
-function sendMessage() {
-    const input = document.getElementById('chatbot-input');
-    const query = input.value.trim();
-    if(!query) return;
-    addMessage(query, true);
-    input.value = '';
-    const answer = findAnswer(query);
-    if(answer) {
-        addMessage(answer, false);
-    } else {
-        addMessage("I'm sorry, I don't have a detailed answer for that yet. Would you like to send a message to the team? <br><br><a href='mailto:celestialarc85@gmail.com' style='color:#00C8FF;'>Tap here to email us</a>", false);
-    }
-}
-
-function toggleChat() {
-    const win = document.getElementById('chatbot-window');
-    win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-}
 </script>
 </body>
 </html>
