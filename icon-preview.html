@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celestial AI – Icon Preview</title>
+    <style>
+        :root {
+            --bg: #040810;
+        }
+        body {
+            background: var(--bg);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .icon-container {
+            width: 90vw;
+            max-width: 512px;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            position: relative;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="icon-container">
+        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Glow filters -->
+                <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="12" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <filter id="glow-violet" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="10" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <filter id="glow-orb" x="-80%" y="-80%" width="260%" height="260%">
+                    <feGaussianBlur stdDeviation="24" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                <filter id="soft-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+
+                <!-- Gradients -->
+                <radialGradient id="orb-grad" cx="35%" cy="35%" r="65%">
+                    <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.95"/>
+                    <stop offset="40%" stop-color="#00c8ff" stop-opacity="0.7"/>
+                    <stop offset="80%" stop-color="#7b2fff" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#040810" stop-opacity="0"/>
+                </radialGradient>
+                <radialGradient id="orb-core" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+                    <stop offset="30%" stop-color="#00e5ff" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="arch-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#7b2fff"/>
+                    <stop offset="50%" stop-color="#00e5ff"/>
+                    <stop offset="100%" stop-color="#7b2fff"/>
+                </linearGradient>
+                <linearGradient id="arch-grad-vert" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#00e5ff"/>
+                    <stop offset="100%" stop-color="#7b2fff"/>
+                </linearGradient>
+            </defs>
+
+            <!-- Deep obsidian background -->
+            <rect width="1024" height="1024" fill="#040810"/>
+
+            <!-- Concentric rings -->
+            <!-- Cyan ring 1 -->
+            <circle cx="512" cy="480" r="420" fill="none" stroke="#00c8ff" stroke-width="2" opacity="0.3"
+                    filter="url(#glow-cyan)" transform="rotate(15 512 480)"/>
+            <circle cx="512" cy="480" r="420" fill="none" stroke="#00c8ff" stroke-width="1" opacity="0.6"/>
+
+            <!-- Violet ring 2 -->
+            <circle cx="512" cy="480" r="380" fill="none" stroke="#7b2fff" stroke-width="2" opacity="0.3"
+                    filter="url(#glow-violet)" transform="rotate(-15 512 480)"/>
+            <circle cx="512" cy="480" r="380" fill="none" stroke="#7b2fff" stroke-width="1" opacity="0.5"/>
+
+            <!-- Cyan ring 3 -->
+            <circle cx="512" cy="480" r="340" fill="none" stroke="#00c8ff" stroke-width="1.5" opacity="0.25"
+                    filter="url(#glow-cyan)" transform="rotate(30 512 480)"/>
+
+            <!-- Violet ring 4 -->
+            <circle cx="512" cy="480" r="300" fill="none" stroke="#7b2fff" stroke-width="1" opacity="0.2"
+                    filter="url(#glow-violet)" transform="rotate(-30 512 480)"/>
+
+            <!-- Particle field (scattered neon stars/dust) -->
+            <circle cx="200" cy="180" r="2" fill="#00e5ff" opacity="0.8" filter="url(#soft-glow)"/>
+            <circle cx="780" cy="150" r="1.5" fill="#7b2fff" opacity="0.7"/>
+            <circle cx="100" cy="600" r="2.5" fill="#00e5ff" opacity="0.6" filter="url(#soft-glow)"/>
+            <circle cx="900" cy="500" r="1.8" fill="#00e5ff" opacity="0.5"/>
+            <circle cx="300" cy="800" r="2" fill="#7b2fff" opacity="0.7" filter="url(#soft-glow)"/>
+            <circle cx="700" cy="850" r="1.5" fill="#00e5ff" opacity="0.6"/>
+            <circle cx="150" cy="350" r="1" fill="#ffffff" opacity="0.4"/>
+            <circle cx="850" cy="300" r="2.2" fill="#7b2fff" opacity="0.5" filter="url(#soft-glow)"/>
+            <circle cx="450" cy="100" r="1.8" fill="#00e5ff" opacity="0.7"/>
+            <circle cx="550" cy="900" r="2" fill="#00e5ff" opacity="0.6" filter="url(#soft-glow)"/>
+            <circle cx="80" cy="780" r="1.5" fill="#7b2fff" opacity="0.8"/>
+            <circle cx="920" cy="700" r="2" fill="#00e5ff" opacity="0.5" filter="url(#soft-glow)"/>
+            <circle cx="350" cy="160" r="1" fill="#ffffff" opacity="0.6"/>
+            <circle cx="650" cy="150" r="2.3" fill="#7b2fff" opacity="0.4"/>
+            <circle cx="250" cy="500" r="1.7" fill="#00e5ff" opacity="0.7"/>
+            <circle cx="750" cy="400" r="1.2" fill="#ffffff" opacity="0.5"/>
+
+            <!-- The central glowing orb (core/singularity) -->
+            <circle cx="512" cy="520" r="110" fill="url(#orb-grad)" filter="url(#glow-orb)"/>
+            <circle cx="512" cy="520" r="40" fill="url(#orb-core)" filter="url(#soft-glow)"/>
+            <!-- Halo ring around the orb -->
+            <circle cx="512" cy="520" r="105" fill="none" stroke="#00e5ff" stroke-width="3" opacity="0.6"
+                    filter="url(#glow-cyan)"/>
+            <circle cx="512" cy="520" r="105" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.4"/>
+
+            <!-- The "A" Arch – biomechanical, claw‑like, no horizontal bar -->
+            <!-- Path: starts from left base, curves inward near top, flares outward at base -->
+            <path d="M 280 780 
+                     Q 280 600, 340 480 
+                     C 380 400, 440 340, 500 320 
+                     C 440 340, 390 400, 360 480 
+                     Q 340 550, 350 650"
+                  fill="none" stroke="url(#arch-grad-vert)" stroke-width="18" stroke-linecap="round"
+                  filter="url(#glow-cyan)"/>
+            <!-- Right side of arch (mirror) -->
+            <path d="M 744 780 
+                     Q 744 600, 684 480 
+                     C 644 400, 584 340, 524 320 
+                     C 584 340, 634 400, 664 480 
+                     Q 684 550, 674 650"
+                  fill="none" stroke="url(#arch-grad-vert)" stroke-width="18" stroke-linecap="round"
+                  filter="url(#glow-cyan)"/>
+
+            <!-- Inner cyan highlight on the arch for depth -->
+            <path d="M 290 775 
+                     Q 290 600, 348 485 
+                     C 386 405, 444 350, 500 330"
+                  fill="none" stroke="#ffffff" stroke-width="2" opacity="0.3"/>
+            <path d="M 734 775 
+                     Q 734 600, 676 485 
+                     C 638 405, 580 350, 524 330"
+                  fill="none" stroke="#ffffff" stroke-width="2" opacity="0.3"/>
+
+            <!-- Claw‑like flares at the base (organic extensions) -->
+            <path d="M 280 780 Q 260 790, 270 810 Q 285 790, 300 785"
+                  fill="none" stroke="url(#arch-grad-vert)" stroke-width="12" stroke-linecap="round"
+                  filter="url(#glow-violet)"/>
+            <path d="M 744 780 Q 764 790, 754 810 Q 739 790, 724 785"
+                  fill="none" stroke="url(#arch-grad-vert)" stroke-width="12" stroke-linecap="round"
+                  filter="url(#glow-violet)"/>
+
+            <!-- Circuit‑like texture on the arch -->
+            <path d="M 320 700 L 340 690 L 340 670 L 360 660" fill="none" stroke="#00e5ff" stroke-width="2"
+                  opacity="0.6" filter="url(#soft-glow)"/>
+            <path d="M 704 700 L 684 690 L 684 670 L 664 660" fill="none" stroke="#00e5ff" stroke-width="2"
+                  opacity="0.6" filter="url(#soft-glow)"/>
+            <path d="M 360 500 L 380 490" fill="none" stroke="#7b2fff" stroke-width="1.5" opacity="0.7"/>
+            <path d="M 664 500 L 644 490" fill="none" stroke="#7b2fff" stroke-width="1.5" opacity="0.7"/>
+
+            <!-- Subtle circuitry nodes -->
+            <circle cx="340" cy="690" r="3" fill="#00e5ff" opacity="0.8" filter="url(#soft-glow)"/>
+            <circle cx="684" cy="690" r="3" fill="#00e5ff" opacity="0.8" filter="url(#soft-glow)"/>
+            <circle cx="380" cy="490" r="2.5" fill="#7b2fff" opacity="0.8" filter="url(#soft-glow)"/>
+            <circle cx="644" cy="490" r="2.5" fill="#7b2fff" opacity="0.8" filter="url(#soft-glow)"/>
+
+            <!-- Small accent marks near the top of the arch -->
+            <path d="M 490 325 Q 500 315, 510 325" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.8"/>
+            <path d="M 500 315 L 500 305" fill="none" stroke="#7b2fff" stroke-width="1.5" opacity="0.7"/>
+        </svg>
+    </div>
+</body>
+</html>
